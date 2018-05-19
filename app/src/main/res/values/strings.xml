@@ -1,6 +1,7 @@
 <resources>
-    <string name="app_name">Recetas</string>
+    <string name="app_name">RecetApp</string>
     <string name="title_inicio">Inicio</string>
     <string name="title_agregar">Agregar</string>
     <string name="title_favoritas">Favoritas</string>
+    <string name="guardar">Guardar</string>
 </resources>

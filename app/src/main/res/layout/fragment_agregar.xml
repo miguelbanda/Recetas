@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent" android:orientation="vertical">
 
@@ -16,7 +17,7 @@
             android:gravity="center"
             android:text="Agregar Receta"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textSize="20sp"
+            android:textSize="15sp"
             android:textStyle="bold" />
 
         <LinearLayout
@@ -25,7 +26,7 @@
             android:orientation="horizontal">
 
             <LinearLayout
-                android:layout_width="123dp"
+                android:layout_width="97dp"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
@@ -59,7 +60,7 @@
                 <TextView
                     android:id="@+id/labelRegimen"
                     android:layout_width="match_parent"
-                    android:layout_height="42dp"
+                    android:layout_height="41dp"
                     android:gravity="center_vertical"
                     android:text="Regimen:"
                     android:textSize="18sp"
@@ -68,7 +69,7 @@
                 <TextView
                     android:id="@+id/labelTipo"
                     android:layout_width="match_parent"
-                    android:layout_height="38dp"
+                    android:layout_height="41dp"
                     android:gravity="center_vertical"
                     android:text="Tipo:"
                     android:textSize="18sp"
@@ -87,18 +88,35 @@
                     android:ems="10"
                     android:hint="Nombre"
                     android:inputType="textPersonName"
+                    android:textColorLink="@color/colorPrimaryDark"
                     android:textSize="15sp"
                     android:textStyle="italic" />
 
-                <EditText
-                    android:id="@+id/textoImagen"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:hint="..."
-                    android:inputType="textPersonName"
-                    android:textSize="15sp"
-                    android:textStyle="italic" />
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/textoImagen"
+                        android:layout_width="152dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:hint="..."
+                        android:inputType="textPersonName"
+                        android:textColorLink="@color/colorPrimaryDark"
+                        android:textSize="15sp"
+                        android:textStyle="italic" />
+
+                    <Button
+                        android:id="@+id/botonBuscarImagen"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="Buscar"
+                        android:textSize="15sp" />
+                </LinearLayout>
 
                 <EditText
                     android:id="@+id/textoPorciones"
@@ -107,6 +125,7 @@
                     android:ems="10"
                     android:hint="Porciones"
                     android:inputType="textPersonName"
+                    android:textColorLink="@color/colorPrimaryDark"
                     android:textSize="15sp"
                     android:textStyle="italic" />
 
@@ -117,6 +136,7 @@
                     android:ems="10"
                     android:hint="Regimen"
                     android:inputType="textPersonName"
+                    android:textColorLink="@color/colorPrimaryDark"
                     android:textSize="15sp"
                     android:textStyle="italic" />
 
@@ -127,10 +147,90 @@
                     android:ems="10"
                     android:hint="Tipo"
                     android:inputType="textPersonName"
+                    android:textColorLink="@color/colorPrimaryDark"
                     android:textSize="15sp"
                     android:textStyle="italic" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/labelPasos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="Pasos:"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/paso1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="Paso 1"
+                    android:inputType="text" />
+
+                <Button
+                    android:id="@+id/botonNuevoPaso"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="+" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/labelIngredientes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ingredientes:"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/ingrediente1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="Ingrediente 1"
+                    android:inputType="textPersonName" />
+
+                <Button
+                    android:id="@+id/button4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="+" />
             </LinearLayout>
         </LinearLayout>
+
     </LinearLayout>
 
 
