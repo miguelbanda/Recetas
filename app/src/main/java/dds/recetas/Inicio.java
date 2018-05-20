@@ -5,14 +5,16 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.menu.MenuView;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.view.Menu;
 
 public class Inicio extends AppCompatActivity {
 
-    Toolbar toolbar;
+    boolean guardar = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,16 +25,8 @@ public class Inicio extends AppCompatActivity {
         bottomNav.setOnNavigationItemSelectedListener(navListener);
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                 new InicioFragment()).commit();
-
-        toolbar = findViewById(R.id.toolbar);
-
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.topbar, menu);
-        return true;
-    }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
