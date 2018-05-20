@@ -42,8 +42,8 @@ public interface DatabaseDao {
             "WHERE r.id = i.receta " +
             "AND instr(r.titulo, :titulo) > 0 " +
             "AND instr(i.nombre, :ingrediente) > 0 " +
-            "AND r.regimen = :regimen " +
-            "AND r.tipo = :tipo")
+            "AND r.regimen <= :regimen " +
+            "AND r.tipo = :tipo OR :tipo = 'INDIFERENTE'")
     List<Receta> buscarReceta(String titulo, String ingrediente, Regimen regimen, Tipo tipo);
 
     @Query("SELECT * FROM ingrediente WHERE receta = :idReceta")

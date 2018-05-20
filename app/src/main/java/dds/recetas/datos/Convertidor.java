@@ -44,28 +44,25 @@ public class Convertidor {
     }
 
     @TypeConverter
-    public static String fromRegimen(Regimen regimen) {
+    public static int fromRegimen(Regimen regimen) {
         if(regimen == null)
-            return "OMNI";
+            return 2;
         switch (regimen) {
             case VEGANO:
-                return "VEGANO";
+                return 0;
             case VEGETARIANO:
-                return "VEGETARIANO";
+                return 1;
             default:
-                return "OMNI";
+                return 2;
         }
     }
 
     @TypeConverter
-    public static Regimen toRegimen(String regimen) {
-        if(regimen == null)
-            return Regimen.OMNI;
-
+    public static Regimen toRegimen(int regimen) {
         switch (regimen) {
-            case "VEGANO":
+            case 0:
                 return Regimen.VEGANO;
-            case "VEGETARIANO":
+            case 1:
                 return Regimen.VEGETARIANO;
             default:
                 return Regimen.OMNI;
