@@ -19,7 +19,7 @@ public abstract class BdReceta extends RoomDatabase {
     public static BdReceta getInstance(final Context context) {
         synchronized (BdReceta.class) {
             if (INSTANCE == null) {
-                //allowMainThreadQueries() se podrá midificar en el futuro
+                //allowMainThreadQueries() se podrá modificar en el futuro
                 //p.e usando LiveData (?)
                 INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                         BdReceta.class,
