@@ -3,10 +3,12 @@ package dds.recetas.datos;
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
+import android.arch.persistence.room.TypeConverters;
 import android.content.Context;
 
-@Database(entities = {Receta.class, Ingrediente.class, IngredienteCuantificado.class,
+@Database(entities = {Receta.class, Ingrediente.class, Favorito.class,
         Paso.class, AsociacionIngredienteReceta.class}, version = 1)
+@TypeConverters({Convertidor.class})
 public abstract class BdReceta extends RoomDatabase {
 
     private static BdReceta INSTANCE;

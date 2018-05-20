@@ -2,11 +2,12 @@ package dds.recetas.datos;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
+import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 
 @Entity(foreignKeys = @ForeignKey(entity = Receta.class,
     parentColumns = "id",
-    childColumns = "receta"))
+    childColumns = "receta"), indices = {@Index(value = {"receta"})})
 public class Paso {
 
     @PrimaryKey(autoGenerate = true)

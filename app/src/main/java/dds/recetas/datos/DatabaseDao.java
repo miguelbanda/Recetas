@@ -38,7 +38,7 @@ public interface DatabaseDao {
     @Query("SELECT * FROM receta WHERE instr(lower(titulo), lower(:texto)) > 0")
     List<Receta> buscarRecetaPorTitulo(String texto);
 
-    @Query("SELECT * FROM receta r, ingrediente i, ing_rec ir " +
+    @Query("SELECT r.* FROM receta r, ingrediente i, ing_rec ir " +
             "WHERE r.id = ir.receta AND i.id = ir.ingrediente " +
             "AND instr(lower(i.nombre), lower(:ingrediente)) > 0 " +
             "AND r.regimen = :regimen " +
