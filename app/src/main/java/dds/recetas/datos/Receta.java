@@ -98,6 +98,8 @@ public class Receta {
         this.id = id;
     }
 
+    public Receta(){}
+
     public Receta calcularNuevasPorciones(int porciones) {
         double ratio = porciones / this.porciones;
         for (IngredienteCuantificado i : ingredientes)

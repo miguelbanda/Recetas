@@ -14,7 +14,8 @@ import android.arch.persistence.room.Index;
                     parentColumns = "id",
                     childColumns = "receta"
             )
-        }, indices = {@Index(value = {"receta"}), @Index(value = {"ingrediente"})})
+        }, indices = {@Index(value = {"receta"}), @Index(value = {"ingrediente"})},
+        primaryKeys = {"ingrediente", "receta"})
 public class AsociacionIngredienteReceta {
     private int ingrediente;
     private int receta;
@@ -57,4 +58,6 @@ public class AsociacionIngredienteReceta {
         ingrediente = i.getId();
         receta = r.getId();
     }
+
+    public AsociacionIngredienteReceta(){}
 }
