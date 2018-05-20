@@ -1,14 +1,13 @@
 package dds.recetas.datos;
 
 import android.app.Application;
-import android.content.Context;
 
 import java.util.List;
 
 //Patrón adaptador
 public class BdRecetaAPI {
 
-    private static BdRecetaAPI INSTANCE;
+    private static BdRecetaAPI INSTANCIA;
     private DatabaseDao mDatabaseDao;
 
     //Antiguo método
@@ -84,9 +83,9 @@ public class BdRecetaAPI {
 
     //Singleton
     public static BdRecetaAPI getInstance(Application app) {
-        if (INSTANCE == null)
-            INSTANCE = new BdRecetaAPI(app);
-        return INSTANCE;
+        if (INSTANCIA == null)
+            INSTANCIA = new BdRecetaAPI(app);
+        return INSTANCIA;
     }
 
     private BdRecetaAPI(Application app) {

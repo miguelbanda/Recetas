@@ -11,21 +11,21 @@ import android.content.Context;
 @TypeConverters({Convertidor.class})
 public abstract class BdReceta extends RoomDatabase {
 
-    private static BdReceta INSTANCE;
+    private static BdReceta INSTANCIA;
 
     public abstract DatabaseDao databaseDao();
 
     //Singleton
     public static BdReceta getInstance(final Context context) {
         synchronized (BdReceta.class) {
-            if (INSTANCE == null) {
+            if (INSTANCIA == null) {
                 //allowMainThreadQueries() se podrá modificar en el futuro
                 //p.e usando LiveData (?)
-                INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
+                INSTANCIA = Room.databaseBuilder(context.getApplicationContext(),
                         BdReceta.class,
                         "BdReceta").allowMainThreadQueries().build();
             }
         }
-        return INSTANCE;
+        return INSTANCIA;
     }
 }
