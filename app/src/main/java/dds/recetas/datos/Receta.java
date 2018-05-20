@@ -1,12 +1,14 @@
 package dds.recetas.datos;
 
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 
 import java.util.List;
 
-@Entity
+@Entity(indices = {@Index(value = {"titulo"}, unique = true)})
 public class Receta {
     @PrimaryKey(autoGenerate = true)
     private int id;

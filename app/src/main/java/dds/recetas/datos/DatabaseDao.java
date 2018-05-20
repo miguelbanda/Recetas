@@ -61,7 +61,7 @@ public interface DatabaseDao {
     List<Receta> verRecetas();
 
     @Insert(onConflict = IGNORE)
-    void nuevoIngrediente(Ingrediente i);
+    void addIngredientes(List<Ingrediente> ingredientes);
 
     @Insert(onConflict = IGNORE)
     void nuevaReceta(Receta r);

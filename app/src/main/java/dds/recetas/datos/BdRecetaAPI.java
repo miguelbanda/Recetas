@@ -57,6 +57,24 @@ public class BdRecetaAPI {
         return buildRecetas(resultado);
     }
 
+    public void crearReceta(Receta r) {
+        mDatabaseDao.nuevaReceta(r);
+
+        //Obtener el id de la receta que acabamos de crear
+        int id = buscarRecetaPorTitulo(r.getTitulo()).get(0).getId();
+
+        for(Ingrediente i : r.getIngredientes()) {
+            i.setReceta(id);
+        }
+
+        for(Paso p : r.getPasos()) {
+            p.setReceta(id);
+        }
+
+        mDatabaseDao.addIngredientes(r.getIngredientes());
+        mDatabaseDao.addPasos(r.getPasos());
+    }
+
     public List<Receta> buscarRecetaPorTitulo(String titulo) {
         if(titulo == null)
             titulo = "";
