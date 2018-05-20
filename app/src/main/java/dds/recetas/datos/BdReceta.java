@@ -7,7 +7,7 @@ import android.arch.persistence.room.TypeConverters;
 import android.content.Context;
 
 @Database(entities = {Receta.class, Ingrediente.class, Favorito.class,
-        Paso.class, AsociacionIngredienteReceta.class}, version = 1)
+        Paso.class}, version = 1)
 @TypeConverters({Convertidor.class})
 public abstract class BdReceta extends RoomDatabase {
 

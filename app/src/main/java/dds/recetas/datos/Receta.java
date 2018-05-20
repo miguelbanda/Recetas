@@ -19,7 +19,8 @@ public class Receta {
     private Regimen regimen;
     private Tipo tipo;
 
-    private @Ignore List<IngredienteCuantificado> ingredientes;
+    private @Ignore
+    List<Ingrediente> ingredientes;
     private @Ignore List<Paso> pasos;
 
     public int getId() {
@@ -70,11 +71,11 @@ public class Receta {
         this.tipo = tipo;
     }
 
-    public List<IngredienteCuantificado> getIngredientes() {
+    public List<Ingrediente> getIngredientes() {
         return ingredientes;
     }
 
-    public void setIngredientes(List<IngredienteCuantificado> ingredientes) {
+    public void setIngredientes(List<Ingrediente> ingredientes) {
         this.ingredientes = ingredientes;
     }
 
@@ -87,7 +88,7 @@ public class Receta {
     }
 
     public Receta(String titulo, String foto, int porciones, Regimen regimen,
-                  Tipo tipo, List<IngredienteCuantificado> ingredientes, List<Paso> pasos, int id) {
+                  Tipo tipo, List<Ingrediente> ingredientes, List<Paso> pasos, int id) {
         this.titulo = titulo;
         this.foto = foto;
         this.porciones = porciones;
@@ -102,7 +103,7 @@ public class Receta {
 
     public Receta calcularNuevasPorciones(int porciones) {
         double ratio = porciones / this.porciones;
-        for (IngredienteCuantificado i : ingredientes)
+        for (Ingrediente i : ingredientes)
             i.setCantidad(i.getCantidad() * ratio);
         return new Receta(titulo, foto, porciones, regimen, tipo, ingredientes, pasos, id);
     }

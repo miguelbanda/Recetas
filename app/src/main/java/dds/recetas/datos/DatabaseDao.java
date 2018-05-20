@@ -38,18 +38,16 @@ public interface DatabaseDao {
     @Query("SELECT * FROM receta WHERE instr(lower(titulo), lower(:texto)) > 0")
     List<Receta> buscarRecetaPorTitulo(String texto);
 
-    @Query("SELECT r.* FROM receta r, ingrediente i, ing_rec ir " +
-            "WHERE r.id = ir.receta AND i.id = ir.ingrediente " +
-            "AND instr(lower(i.nombre), lower(:ingrediente)) > 0 " +
+    @Query("SELECT r.* FROM receta r, ingrediente i " +
+            "WHERE r.id = i.receta " +
+            "AND instr(r.titulo, :titulo) > 0 " +
+            "AND instr(i.nombre, :ingrediente) > 0 " +
             "AND r.regimen = :regimen " +
-            "AND r.tipo = :tipo " +
-            "AND instr(lower(r.titulo), lower(:titulo)) > 0")
+            "AND r.tipo = :tipo")
     List<Receta> buscarReceta(String titulo, String ingrediente, Regimen regimen, Tipo tipo);
 
-    @Query("SELECT i.nombre AS ingrediente, a.cantidad AS cantidad, a.unidad AS unidad " +
-            "FROM ingrediente i, ing_rec a " +
-            "WHERE a.receta = :idReceta")
-    List<IngredienteCuantificado> getIngredientes(int idReceta);
+    @Query("SELECT * FROM ingrediente WHERE receta = :idReceta")
+    List<Ingrediente> getIngredientes(int idReceta);
 
     @Query("SELECT * FROM paso p " +
             "WHERE p.receta = :idReceta " +
@@ -70,9 +68,6 @@ public interface DatabaseDao {
 
     @Insert
     void addPasos(List<Paso> pasos);
-
-    @Insert
-    void asociarIngrediente(AsociacionIngredienteReceta a);
 
     @Insert
     void nuevoFavorito(Favorito f);
