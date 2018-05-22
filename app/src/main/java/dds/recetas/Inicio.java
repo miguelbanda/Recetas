@@ -16,7 +16,7 @@ import android.view.Menu;
 
 public class Inicio extends AppCompatActivity {
 
-    ListView listView;
+    ListView listViewFavoritos = (ListView) findViewById(R.id.listaFavoritos);
     String[] favoritos = new String[] {"Tortilla Española", "Tortilla Francesa", "Mole Poblano"};
 
 
@@ -31,9 +31,8 @@ public class Inicio extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                 new InicioFragment()).commit();
 
-        listView = (ListView) findViewById(R.id.listaFavoritos);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_expandable_list_item_1, favoritos);
-        listView.setAdapter(adapter);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_expandable_list_item_1, favoritos);
+        listViewFavoritos.setAdapter(adapter);
 
 
     }
