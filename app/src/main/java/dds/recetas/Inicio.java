@@ -9,12 +9,17 @@ import android.support.v7.view.menu.MenuView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.view.Menu;
 
 public class Inicio extends AppCompatActivity {
 
-    boolean guardar = false;
+    ListView listView;
+    String[] favoritos = new String[] {"Tortilla Española", "Tortilla Francesa", "Mole Poblano"};
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +30,12 @@ public class Inicio extends AppCompatActivity {
         bottomNav.setOnNavigationItemSelectedListener(navListener);
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                 new InicioFragment()).commit();
+
+        listView = (ListView) findViewById(R.id.listaFavoritos);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_expandable_list_item_1, favoritos);
+        listView.setAdapter(adapter);
+
+
     }
 
 
