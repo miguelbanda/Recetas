@@ -8,7 +8,7 @@ import android.content.Context;
 
 @Database(entities = {Receta.class, Ingrediente.class, Favorito.class,
         Paso.class}, version = 1)
-@TypeConverters({Convertidor.class})
+@TypeConverters({ConvertidorTipo.class, ConvertidorReceta.class}) //Refactoring 4: dos convertidores
 public abstract class BdReceta extends RoomDatabase {
 
     private static BdReceta INSTANCIA;
