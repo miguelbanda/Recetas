@@ -5,4 +5,5 @@
     <string name="title_favoritas">Favoritas</string>
     <string name="guardar">GUARDAR</string>
     <string name="title_receta">Nueva Receta</string>
+    <string name="favoritos">listaFavoritos</string>
 </resources>

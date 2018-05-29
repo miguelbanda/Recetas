@@ -1,23 +1,34 @@
 package dds.recetas;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.menu.MenuView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.AttributeSet;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.view.Menu;
 
-public class Inicio extends AppCompatActivity {
+import java.util.ArrayList;
+import java.util.Arrays;
 
-    ListView listViewFavoritos = (ListView) findViewById(R.id.listaFavoritos);
-    String[] favoritos = new String[] {"Tortilla Española", "Tortilla Francesa", "Mole Poblano"};
+import static dds.recetas.R.id.recyclerFav;
+
+
+public class Inicio extends AppCompatActivity {
 
 
 
@@ -31,12 +42,9 @@ public class Inicio extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                 new InicioFragment()).commit();
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_expandable_list_item_1, favoritos);
-        listViewFavoritos.setAdapter(adapter);
 
 
     }
-
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
