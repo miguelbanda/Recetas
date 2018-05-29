@@ -13,10 +13,16 @@ import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 
+import dds.recetas.datos.Ingrediente;
+import dds.recetas.datos.Paso;
+import dds.recetas.datos.Receta;
+import dds.recetas.datos.Regimen;
+import dds.recetas.datos.Tipo;
+
 public class FavoritosFragment extends Fragment {
 
-    ArrayList<String> listFavoritos;
-    RecyclerView recyclerFavoritos;
+    ArrayList<Receta> listaRecetasFavoritas;
+    RecyclerView recyclerRecetasFavoritas;
 
     @Nullable
     @Override
@@ -25,18 +31,25 @@ public class FavoritosFragment extends Fragment {
 
         LinearLayout linearFavoritos =(LinearLayout) inflater.inflate(R.layout.fragment_favoritos, container, false);
 
-        recyclerFavoritos = linearFavoritos.findViewById(R.id.recyclerFav);
-        recyclerFavoritos.setLayoutManager(new LinearLayoutManager(linearFavoritos.getContext(),
+        listaRecetasFavoritas = new ArrayList<>();
+        recyclerRecetasFavoritas = linearFavoritos.findViewById(R.id.recyclerFav);
+        recyclerRecetasFavoritas.setLayoutManager(new LinearLayoutManager(linearFavoritos.getContext(),
                 LinearLayoutManager.VERTICAL, false));
-        listFavoritos = new ArrayList<>();
 
-        for (int i = 0; i < 50; i++) {
-            listFavoritos.add("Dato #" + i + " ");
-        }
+        llenarRecetasFavoritas();
 
-        AdaptadorFavs adaptador = new AdaptadorFavs(listFavoritos);
-        recyclerFavoritos.setAdapter(adaptador);
+        AdaptadorRecetasFavoritas adaptador = new AdaptadorRecetasFavoritas(listaRecetasFavoritas);
+        recyclerRecetasFavoritas.setAdapter(adaptador);
 
         return linearFavoritos;
+    }
+
+    private void llenarRecetasFavoritas() {
+        for (int i = 1; i <= 10; i++ ) {
+            Receta receta = new Receta();
+            receta.setTitulo("Receta" + i);
+            receta.setFoto("http://foodandtravel.mx/home/wp-content/uploads/2017/08/tacoslapastorFT.jpg");
+            listaRecetasFavoritas.add(receta);
+        }
     }
 }
