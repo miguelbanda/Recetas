@@ -8,11 +8,15 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 public class AgregarFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_agregar, container, false);
+
+        ((Main)getActivity()).hideFAB();
+        LinearLayout fragmentAgregar = (LinearLayout) inflater.inflate(R.layout.fragment_agregar, container, false);
+        return fragmentAgregar;
     }
 }

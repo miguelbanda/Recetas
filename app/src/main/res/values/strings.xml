@@ -6,4 +6,28 @@
     <string name="guardar">GUARDAR</string>
     <string name="title_receta">Nueva Receta</string>
     <string name="favoritos">listaFavoritos</string>
+    <string name="title_activity_main">Main</string>
+    <string name="tab_text_1">Inicio</string>
+    <string name="tab_text_2">Favoritas</string>
+    <string name="tab_text_3">Agregar</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+
+
+    <string-array name="tipos">
+        <item>Indiferente</item>
+        <item>Entrante</item>
+        <item>Aperitivo</item>
+        <item>Postre</item>
+        <item>Principal</item>
+    </string-array>
+
+    <string-array name="regimenes">
+        <item>Indiferente</item>
+        <item>Vegano</item>
+        <item>Vegetariano</item>
+    </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
