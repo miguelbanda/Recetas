@@ -1,7 +1,5 @@
 package dds.recetas.datos;
 
-import android.net.Uri;
-
 import com.google.firebase.database.IgnoreExtraProperties;
 
 import java.util.List;
@@ -9,14 +7,14 @@ import java.util.List;
 @IgnoreExtraProperties
 public class Receta {
     public String nombre;
-    public Uri foto;
+    public String foto;
     public boolean favorito;
     public String regimen;
     public String tipo;
     public List<Ingrediente> ingredientes;
     public List<Paso> pasos;
 
-    public Receta(String nombre, Uri foto, Regimen regimen, Tipo tipo, List<Ingrediente> ingredientes, List<Paso> pasos) {
+    public Receta(String nombre, String foto, Regimen regimen, Tipo tipo, List<Ingrediente> ingredientes, List<Paso> pasos) {
         this.nombre = nombre;
         this.foto = foto;
         this.favorito = false;
