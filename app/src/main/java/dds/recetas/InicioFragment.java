@@ -19,12 +19,13 @@ import android.widget.Toolbar;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import dds.recetas.datos.Receta;
 
 public class InicioFragment extends Fragment {
 
-    public ArrayList<Receta> listaRecetasInicio;
+    public List<Receta> listaRecetasInicio;
     RecyclerView recyclerRecetasInicio;
 
     @Nullable
@@ -41,7 +42,7 @@ public class InicioFragment extends Fragment {
 
         llenarInicio();
 
-        AdaptadorRecetasInicio adaptador = new AdaptadorRecetasInicio(listaRecetasInicio);
+        AdaptadorRecetasInicio adaptador = new AdaptadorRecetasInicio(this.getContext(), listaRecetasInicio);
         recyclerRecetasInicio.setAdapter(adaptador);
 
         return fragment;

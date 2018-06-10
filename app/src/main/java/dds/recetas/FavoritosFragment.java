@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import dds.recetas.datos.Ingrediente;
 import dds.recetas.datos.Paso;
@@ -21,7 +22,7 @@ import dds.recetas.datos.Tipo;
 
 public class FavoritosFragment extends Fragment {
 
-    ArrayList<Receta> listaRecetasFavoritas;
+    List<Receta> listaRecetasFavoritas;
     RecyclerView recyclerRecetasFavoritas;
 
     @Nullable
@@ -38,7 +39,7 @@ public class FavoritosFragment extends Fragment {
 
         llenarRecetasFavoritas();
 
-        AdaptadorRecetasFavoritas adaptador = new AdaptadorRecetasFavoritas(listaRecetasFavoritas);
+        AdaptadorRecetasFavoritas adaptador = new AdaptadorRecetasFavoritas(this.getContext(), listaRecetasFavoritas);
         recyclerRecetasFavoritas.setAdapter(adaptador);
 
         return linearFavoritos;

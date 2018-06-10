@@ -13,8 +13,12 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import dds.recetas.datos.Receta;
 import dds.recetas.datos.BdRecetaAPI;
+import dds.recetas.datos.Regimen;
+import dds.recetas.datos.Tipo;
 
 public class BuscarReceta extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
@@ -23,8 +27,8 @@ public class BuscarReceta extends AppCompatActivity implements AdapterView.OnIte
     EditText editIngrediente;
     Spinner spinnerTipo;
     Spinner spinnerRegimen;
-    String tipo;
-    String regimen;
+    Tipo tipo;
+    Regimen regimen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,21 +66,17 @@ public class BuscarReceta extends AppCompatActivity implements AdapterView.OnIte
                 switch (v.getId()) {
                     case R.id.buttonBuscar:
 
-                        ArrayList<Receta> recetasBusqueda = new ArrayList<Receta>();
 
                         String nombre = editReceta.getText().toString();
                         String ingrediente = editIngrediente.getText().toString();
 
-                        //Hacer busqueda a base de datos
+                        Intent intent = new Intent(getApplicationContext(), Resultado.class);
 
-                        //Refactor: Estaba pasando los parametros a la siguiente vista,
-                        // pero es mejor hacer la busqueda aqui y pasar la lista de recetas
-                        // a la siguiente vista
+                        intent.putExtra("RECETA", nombre);
+                        intent.putExtra("INGREDIENTE", ingrediente);
+                        intent.putExtra("TIPO", tipo);
+                        intent.putExtra("REGIMEN", regimen);
 
-
-                        //Aun no se si hacer una nueva actividad o volver a la de inicio ¿?
-                        Intent intent = new Intent(getApplicationContext(), Main.class);
-                        intent.putExtra("RECETAS", recetasBusqueda);
                         startActivity(intent);
                     default:
                         break;
@@ -94,16 +94,52 @@ public class BuscarReceta extends AppCompatActivity implements AdapterView.OnIte
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         if(parent.equals(R.id.spinnerTipo)) {
-            tipo = parent.getItemAtPosition(position).toString();
+            switch (position) {
+                case 0:
+                    tipo = Tipo.INDIFERENTE;
+                    break;
+                case 1:
+                    tipo = Tipo.ENTRANTE;
+                    break;
+                case 2:
+                    tipo = Tipo.APERITIVO;
+                    break;
+                case 3:
+                    tipo = Tipo.POSTRE;
+                    break;
+                case 4:
+                    tipo = Tipo.PRINCIPAL;
+                    break;
+                default:
+                    tipo = Tipo.INDIFERENTE;
+                    break;
+            }
         }
         else if (parent.equals(R.id.spinnerRegimen)) {
-            regimen = parent.getItemAtPosition(position).toString();
+            switch (position) {
+                case 0:
+                    regimen= Regimen.OMNI;
+                    break;
+                case 1:
+                    regimen = Regimen.VEGANO;
+                    break;
+                case 2:
+                    regimen = Regimen.VEGETARIANO;
+                    break;
+                default:
+                    regimen= Regimen.OMNI;
+                    break;
+            }
         }
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-        regimen = "";
-        tipo = "";
+        if(parent.equals(R.id.spinnerTipoAgregar)) {
+            tipo = Tipo.INDIFERENTE;
+        }
+        if(parent.equals(R.id.spinnerRegimenAgregar)) {
+            regimen = Regimen.OMNI;
+        }
     }
 }
