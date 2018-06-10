@@ -43,15 +43,14 @@ public class AdaptadorRecetasInicio extends RecyclerView.Adapter<AdaptadorReceta
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolderRecetas holder, final int position) {
-        String urlReceta = listaRecetasInicio.get(position).getFoto();
-        holder.nombreReceta.setText(listaRecetasInicio.get(position).getTitulo());
-        Picasso.get().load(urlReceta).into(holder.fotoReceta);
+        holder.fotoReceta.setImageURI(listaRecetasInicio.get(position).foto);
+        holder.nombreReceta.setText(listaRecetasInicio.get(position).nombre);
 
         holder.layoutItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent nuevaActividad = new Intent(context, MostrarReceta.class);
-                String nombre = listaRecetasInicio.get(position).getTitulo();
+                String nombre = listaRecetasInicio.get(position).nombre;
                 nuevaActividad.putExtra("tituloReceta", nombre);
 
                 Toast.makeText(context, "Click on " + nombre, Toast.LENGTH_SHORT).show();

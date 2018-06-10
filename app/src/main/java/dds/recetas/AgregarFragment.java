@@ -8,6 +8,7 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -36,6 +37,7 @@ import dds.recetas.datos.Regimen;
 import dds.recetas.datos.Tipo;
 
 import static android.app.Activity.RESULT_OK;
+import static android.support.constraint.Constraints.TAG;
 
 public class AgregarFragment extends Fragment implements AdapterView.OnItemSelectedListener{
 
@@ -50,8 +52,11 @@ public class AgregarFragment extends Fragment implements AdapterView.OnItemSelec
     Spinner spinnerPorcionesAgregar, spinnerTipoAgregar, spinnerRegimenAgregar;
     Tipo tipo;
     Regimen regimen;
-    Uri urlImagen;
+    Uri urlImagen = null;
     int porciones, pasos = 1, ingredientes = 1;
+    public ArrayAdapter<String> adaptadorTipo;
+    public ArrayAdapter<String> adaptadorRegimen;
+    public ArrayAdapter<String> adaptadorPorciones;
 
     @Nullable
     @Override
@@ -74,6 +79,10 @@ public class AgregarFragment extends Fragment implements AdapterView.OnItemSelec
         spinnerPorcionesAgregar = fragmentAgregar.findViewById(R.id.spinnerPorcionesAgregar);
         spinnerTipoAgregar = fragmentAgregar.findViewById(R.id.spinnerTipoAgregar);
         spinnerRegimenAgregar = fragmentAgregar.findViewById(R.id.spinnerRegimenAgregar);
+
+        spinnerRegimenAgregar.setOnItemSelectedListener(this);
+        spinnerTipoAgregar.setOnItemSelectedListener(this);
+        spinnerPorcionesAgregar.setOnItemSelectedListener(this);
 
         setAdaptadoresSpinners();
 
@@ -117,17 +126,14 @@ public class AgregarFragment extends Fragment implements AdapterView.OnItemSelec
             @Override
             public void onClick(View v) {
                 getValoresDeReceta();
+
                 if(!verificaValoresDeReceta()){
                     Toast.makeText(fragmentAgregar.getContext(),"No se puede agregar receta", Toast.LENGTH_SHORT).show();
                 }
                 else {
                     Toast.makeText(fragmentAgregar.getContext(),"Receta agregada", Toast.LENGTH_SHORT).show();
-                    Receta nuevaReceta = new Receta();
-                    nuevaReceta.setTitulo(tituloReceta);
-                    //Ver como guardar imagen
-                    //nuevaReceta.setFoto(urlImagenReceta);
-                    nuevaReceta.setIngredientes(listaIngredientes);
-                    nuevaReceta.setPasos(listaPasos);
+                    Receta nuevaReceta = new Receta(tituloReceta, urlImagen, regimen, tipo, listaIngredientes, listaPasos);
+
                     BdRecetaAPI apiBaseDeDatos = BdRecetaAPI.getInstance(application);
                     apiBaseDeDatos.crearReceta(nuevaReceta);
                 }
@@ -137,7 +143,8 @@ public class AgregarFragment extends Fragment implements AdapterView.OnItemSelec
         botonBuscarImagen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cargarImagen();
+                //cargarImagen();
+                urlImagen = null;
             }
         });
 
@@ -161,19 +168,19 @@ public class AgregarFragment extends Fragment implements AdapterView.OnItemSelec
 
     public void setAdaptadoresSpinners(){
 
-        ArrayAdapter<String> adaptadorTipo = new ArrayAdapter<String>(this.getContext(),
+         adaptadorTipo = new ArrayAdapter<String>(this.getContext(),
                 android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.tipos));
         adaptadorTipo.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerTipoAgregar.setAdapter(adaptadorTipo);
 
-        ArrayAdapter<String> adaptadorRegimen = new ArrayAdapter<String>(this.getContext(),
+        adaptadorRegimen = new ArrayAdapter<String>(this.getContext(),
                 android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.regimenes));
-        adaptadorTipo.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adaptadorRegimen.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerRegimenAgregar.setAdapter(adaptadorRegimen);
 
-        ArrayAdapter<String> adaptadorPorciones = new ArrayAdapter<String>(this.getContext(),
+        adaptadorPorciones = new ArrayAdapter<String>(this.getContext(),
                 android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.porciones));
-        adaptadorTipo.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adaptadorPorciones.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerPorcionesAgregar.setAdapter(adaptadorPorciones);
 
     }
@@ -211,10 +218,10 @@ public class AgregarFragment extends Fragment implements AdapterView.OnItemSelec
     public void crearListaPasos() {
 
         Paso pasoPrimero = new Paso();
-        pasoPrimero.setNumero(1);
+        pasoPrimero.numero = 1;
         String pasoUno = primerPaso.getText().toString();
         if (verificaStringNoVacia(pasoUno)) {
-            pasoPrimero.setPaso(pasoUno);
+            pasoPrimero.paso = pasoUno;
             listaPasos.add(pasoPrimero);
         }
 
@@ -222,8 +229,8 @@ public class AgregarFragment extends Fragment implements AdapterView.OnItemSelec
             String pasoN = editPasos.get(i).getText().toString();
             Paso pasoNuevo = new Paso();
             if(verificaStringNoVacia(pasoN)) {
-                pasoNuevo.setNumero(i+2);
-                pasoNuevo.setPaso(pasoN);
+                pasoNuevo.numero = i + 2;
+                pasoNuevo.paso = pasoN;
                 listaPasos.add(pasoNuevo);
             }
         }
@@ -235,7 +242,7 @@ public class AgregarFragment extends Fragment implements AdapterView.OnItemSelec
         String ingredienteUno = primerIngrediente.getText().toString();
         if(verificaStringNoVacia(ingredienteUno))
         {
-            ingredientePrimero.setNombre(ingredienteUno);
+            ingredientePrimero.nombre = ingredienteUno;
             listaIngredientes.add(ingredientePrimero);
         }
 
@@ -243,7 +250,7 @@ public class AgregarFragment extends Fragment implements AdapterView.OnItemSelec
             String ingredienteN = editIngredientes.get(i).getText().toString();
             Ingrediente ingredienteNuevo = new Ingrediente();
             if(verificaStringNoVacia(ingredienteN)){
-                ingredienteNuevo.setNombre(ingredienteN);
+                ingredienteNuevo.nombre = ingredienteN;
                 listaIngredientes.add(ingredienteNuevo);
             }
         }
@@ -258,75 +265,51 @@ public class AgregarFragment extends Fragment implements AdapterView.OnItemSelec
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        if(parent.equals(R.id.spinnerTipoAgregar)) {
+
+        if(parent.equals(spinnerTipoAgregar)) {
             switch (position) {
                 case 0:
-                    tipo = Tipo.INDIFERENTE;
+                    this.tipo = Tipo.INDIFERENTE;
                     break;
                 case 1:
-                    tipo = Tipo.ENTRANTE;
+                    this.tipo = Tipo.ENTRANTE;
                     break;
                 case 2:
-                    tipo = Tipo.APERITIVO;
+                    this.tipo = Tipo.APERITIVO;
                     break;
                 case 3:
-                    tipo = Tipo.POSTRE;
+                    this.tipo = Tipo.POSTRE;
                     break;
                 case 4:
-                    tipo = Tipo.PRINCIPAL;
+                    this.tipo = Tipo.PRINCIPAL;
                     break;
                 default:
-                    tipo = Tipo.INDIFERENTE;
+                    this.tipo = Tipo.INDIFERENTE;
                     break;
             }
         }
-        else if (parent.equals(R.id.spinnerRegimenAgregar)) {
+        else if (parent.equals(spinnerRegimenAgregar)) {
             switch (position) {
                 case 0:
-                    regimen= Regimen.OMNI;
+                    this.regimen= Regimen.OMNI;
                     break;
                 case 1:
-                    regimen = Regimen.VEGANO;
+                    this.regimen = Regimen.VEGANO;
                     break;
                 case 2:
-                    regimen = Regimen.VEGETARIANO;
+                    this.regimen = Regimen.VEGETARIANO;
                     break;
                 default:
-                    regimen= Regimen.OMNI;
+                    this.regimen= Regimen.OMNI;
                     break;
             }
         }
-        else if (parent.equals(R.id.spinnerPorcionesAgregar)){
-            switch (position) {
-                case 0:
-                    porciones = 1;
-                    break;
-                case 1:
-                    porciones = 2;
-                    break;
-                case 2:
-                    porciones = 3;
-                    break;
-                case 3:
-                    porciones = 4;
-                    break;
-                case 4:
-                    porciones = 5;
-                    break;
-                case 5:
-                    porciones = 6;
-                    break;
-                case 6:
-                    porciones = 7;
-                    break;
-                case 7:
-                    porciones = 8;
-                    break;
-                default:
-                    porciones = 2;
-                    break;
-            }
+        else if (parent.equals(spinnerPorcionesAgregar)){
+
+            //Refactor de un case a valor + 1
+            this.porciones = position + 1;
         }
+
     }
 
     @Override

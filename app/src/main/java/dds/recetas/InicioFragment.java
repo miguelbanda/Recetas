@@ -1,5 +1,6 @@
 package dds.recetas;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -51,8 +52,8 @@ public class InicioFragment extends Fragment {
     private void llenarInicio() {
         for (int i = 1; i <= 10; i++ ) {
             Receta receta = new Receta();
-            receta.setTitulo("Receta " + i);
-            receta.setFoto("https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Paella_de_mariscos.jpg/220px-Paella_de_mariscos.jpg");
+            receta.nombre = ("Receta " + i);
+            receta.foto = Uri.parse("https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Paella_de_mariscos.jpg/220px-Paella_de_mariscos.jpg");
             listaRecetasInicio.add(receta);
         }
     }
