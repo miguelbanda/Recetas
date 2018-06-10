@@ -48,7 +48,7 @@ public class FavoritosFragment extends Fragment {
         for (int i = 1; i <= 10; i++ ) {
             Receta receta = new Receta();
             receta.nombre = "Receta" + i;
-            receta.foto = "http://foodandtravel.mx/home/wp-content/uploads/2017/08/tacoslapastorFT.jpg";
+            //receta.foto = "http://foodandtravel.mx/home/wp-content/uploads/2017/08/tacoslapastorFT.jpg";
             listaRecetasFavoritas.add(receta);
         }
     }

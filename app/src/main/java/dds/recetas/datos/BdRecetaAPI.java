@@ -59,7 +59,7 @@ public class BdRecetaAPI {
     }
 
     //Singleton
-    public static BdRecetaAPI getInstance(Application app) {
+    public static BdRecetaAPI getInstance() {
         if (INSTANCIA == null)
             INSTANCIA = new BdRecetaAPI();
         return INSTANCIA;

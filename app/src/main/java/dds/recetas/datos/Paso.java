@@ -6,12 +6,10 @@ import com.google.firebase.database.IgnoreExtraProperties;
 public class Paso {
 
     public String paso;
-    public int receta;
     public int numero;
 
-    public Paso(String paso, int receta, int numero) {
+    public Paso(String paso, int numero) {
         this.paso = paso;
-        this.receta = receta;
         this.numero = numero;
     }
 
