@@ -6,6 +6,7 @@ import java.util.List;
 
 @IgnoreExtraProperties
 public class Receta {
+    public String id;
     public String nombre;
     public String foto;
     public boolean favorito;

@@ -1,7 +1,5 @@
 package dds.recetas.datos;
 
-import android.app.Application;
-
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -24,11 +22,11 @@ public class BdRecetaAPI {
     }
 
     public void agregarFavorito(Receta r) {
-        recetasRef.child(r.nombre).child("favorito").setValue(true);
+        recetasRef.child(r.id).child("favorito").setValue(true);
     }
 
     public void borrarFavorito(Receta r) {
-        recetasRef.child(r.nombre).child("favorito").setValue(false);
+        recetasRef.child(r.id).child("favorito").setValue(false);
     }
 
     public List<Receta> buscarReceta(String titulo, String ingrediente,
@@ -44,8 +42,11 @@ public class BdRecetaAPI {
         return resultado;
     }
 
+    //Refactoring: primary key autogenerada en vez de título: varias recetas pueden
+    //compartir título
     public void crearReceta(Receta r) {
-        recetasRef.child(r.nombre).setValue(r);
+        r.id = recetasRef.push().getKey();
+        recetasRef.child(r.id).setValue(r);
     }
 
     public List<Receta> buscarRecetaPorTitulo(String titulo) {
