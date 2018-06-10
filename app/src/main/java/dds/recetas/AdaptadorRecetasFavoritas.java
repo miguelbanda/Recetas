@@ -34,7 +34,7 @@ public class AdaptadorRecetasFavoritas extends RecyclerView.Adapter<AdaptadorRec
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolderPersonajes holder, int position) {
-        holder.nombreReceta.setText(listaRecetasFavoritas.get(position).getTitulo());
+        holder.nombreReceta.setText(listaRecetasFavoritas.get(position).nombre);
         Picasso.get().load("http://foodandtravel.mx/home/wp-content/uploads/2017/08/tacoslapastorFT.jpg").into(holder.fotoReceta);
     }
 

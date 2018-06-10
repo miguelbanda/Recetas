@@ -2,94 +2,88 @@ package dds.recetas.datos;
 
 import android.app.Application;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 import java.util.List;
 
 //Patrón adaptador
 public class BdRecetaAPI {
 
     private static BdRecetaAPI INSTANCIA;
-    private DatabaseDao mDatabaseDao;
-
-    //Antiguo método
-    /*
-    private void buildReceta(Receta r) {
-        r.setIngredientes(mDatabaseDao.getIngredientes(r.getId()));
-        r.setPasos(mDatabaseDao.getPasos(r.getId()));
-    }
-    */
-
-    //Refactoring 1 : build recetaS en vez de hacer la iteración cada vez
-    //  Retornar el parámetro en vez de void para que el código sea mas conciso
-    private List<Receta> buildRecetas(List<Receta> recetas) {
-        for(Receta r : recetas) {
-            r.setIngredientes(mDatabaseDao.getIngredientes(r.getId()));
-            r.setPasos(mDatabaseDao.getPasos(r.getId()));
-        }
-        return recetas;
-    }
+    private FirebaseDatabase bd;
+    private DatabaseReference recetasRef;
+    private List<Receta> recetas;
 
     public List<Receta> favoritos() {
-        List<Receta> resultado = mDatabaseDao.verFavoritos();
-        return buildRecetas(resultado);
+        return null;
     }
 
     public void agregarFavorito(Receta r) {
-        mDatabaseDao.nuevoFavorito(new Favorito(r));
+        recetasRef.child(r.nombre).child("favorito").setValue(true);
     }
 
     public void borrarFavorito(Receta r) {
-        mDatabaseDao.borrarFavorito(new Favorito(r));
+        recetasRef.child(r.nombre).child("favorito").setValue(false);
     }
 
     public List<Receta> buscarReceta(String titulo, String ingrediente,
                                      Tipo tipo, Regimen regimen) {
-        if(titulo == null)
-            titulo = "";
-        if(ingrediente == null)
-            ingrediente = "";
-        if(tipo == null)
-            tipo = Tipo.INDIFERENTE;
-        if(regimen == null)
-            regimen = Regimen.OMNI;
-
-        List<Receta> resultado = mDatabaseDao.buscarReceta(titulo, ingrediente, regimen, tipo);
-        return buildRecetas(resultado);
+        List<Receta> resultado = new ArrayList<>();
+        for(Receta r : recetas) {
+            if(r.nombre.toLowerCase().contains(titulo.toLowerCase())
+                    && (tipo == r.tipo || tipo == Tipo.INDIFERENTE)
+                    && (regimen == r.regimen || regimen == Regimen.OMNI)) {
+                resultado.add(r);
+            }
+        }
+        return resultado;
     }
 
     public void crearReceta(Receta r) {
-        mDatabaseDao.nuevaReceta(r);
-
-        //Obtener el id de la receta que acabamos de crear
-        int id = buscarRecetaPorTitulo(r.getTitulo()).get(0).getId();
-
-        for(Ingrediente i : r.getIngredientes()) {
-            i.setReceta(id);
-        }
-
-        for(Paso p : r.getPasos()) {
-            p.setReceta(id);
-        }
-
-        mDatabaseDao.addIngredientes(r.getIngredientes());
-        mDatabaseDao.addPasos(r.getPasos());
+        recetasRef.child(r.nombre).setValue(r);
     }
 
     public List<Receta> buscarRecetaPorTitulo(String titulo) {
-        if(titulo == null)
-            titulo = "";
-
-        return buildRecetas(mDatabaseDao.buscarRecetaPorTitulo(titulo));
+        List<Receta> resultado = new ArrayList<>();
+        for(Receta r : recetas) {
+            if(r.nombre.toLowerCase().contains(titulo.toLowerCase())) {
+                resultado.add(r);
+            }
+        }
+        return resultado;
     }
 
     //Singleton
     public static BdRecetaAPI getInstance(Application app) {
         if (INSTANCIA == null)
-            INSTANCIA = new BdRecetaAPI(app);
+            INSTANCIA = new BdRecetaAPI();
         return INSTANCIA;
     }
 
-    private BdRecetaAPI(Application app) {
-        BdReceta bd = BdReceta.getInstance(app);
-        mDatabaseDao = bd.databaseDao();
+    private BdRecetaAPI() {
+        bd = FirebaseDatabase.getInstance();
+        recetasRef = bd.getReference("recetas");
+        recetas = new ArrayList<>();
+
+        recetasRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                recetas.clear();
+                for(DataSnapshot rs : dataSnapshot.getChildren()) {
+                    Receta r = rs.getValue(Receta.class);
+                    recetas.add(r);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 }
