@@ -18,7 +18,13 @@ public class BdRecetaAPI {
     private List<Receta> recetas;
 
     public List<Receta> favoritos() {
-        return null;
+        List<Receta> resultado = new ArrayList<>();
+        for(Receta r : recetas) {
+            if(r.favorito) {
+                resultado.add(r);
+            }
+        }
+        return resultado;
     }
 
     public void agregarFavorito(Receta r) {
