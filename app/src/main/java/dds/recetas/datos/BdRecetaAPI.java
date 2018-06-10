@@ -32,11 +32,17 @@ public class BdRecetaAPI {
     public List<Receta> buscarReceta(String titulo, String ingrediente,
                                      Tipo tipo, Regimen regimen) {
         List<Receta> resultado = new ArrayList<>();
+
         for(Receta r : recetas) {
             if(r.nombre.toLowerCase().contains(titulo.toLowerCase())
                     && (tipo.toString() == r.tipo || tipo == Tipo.INDIFERENTE)
                     && (regimen.toString() == r.regimen || regimen == Regimen.OMNI)) {
-                resultado.add(r);
+                for(Ingrediente i : r.ingredientes) {
+                    if(i.nombre.contains(ingrediente)) {
+                        resultado.add(r);
+                        break;
+                    }
+                }
             }
         }
         return resultado;
