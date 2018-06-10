@@ -40,7 +40,7 @@ public class Resultado extends AppCompatActivity {
         tipo = (Tipo) bundle.get("TIPO");
         regimen = (Regimen) bundle.get("REGIMEN");
 
-        BdRecetaAPI apiBaseDeDatos = BdRecetaAPI.getInstance(getApplication());
+        BdRecetaAPI apiBaseDeDatos = BdRecetaAPI.getInstance();
 
 
 

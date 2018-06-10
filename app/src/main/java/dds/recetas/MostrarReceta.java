@@ -26,7 +26,7 @@ public class MostrarReceta extends AppCompatActivity {
 
     private void obtenerDatosReceta() {
         if(getIntent().hasExtra("idReceta")) {
-            BdRecetaAPI apiBaseDeDatos = BdRecetaAPI.getInstance(getApplication());
+            BdRecetaAPI apiBaseDeDatos = BdRecetaAPI.getInstance();
             //FALTA buscar receta por id
             //recetaMostrada = apiBaseDeDatos.buscarReceta();
         }

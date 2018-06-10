@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import dds.recetas.datos.BdRecetaAPI;
 import dds.recetas.datos.Ingrediente;
 import dds.recetas.datos.Paso;
 import dds.recetas.datos.Receta;
@@ -48,12 +49,7 @@ public class FavoritosFragment extends Fragment {
     }
 
     private void llenarRecetasFavoritas() {
-        for (int i = 1; i <= 10; i++ ) {
-            Receta receta = new Receta();
-            receta.nombre = "Receta" + i;
-            Uri uri = Uri.parse("http://foodandtravel.mx/home/wp-content/uploads/2017/08/tacoslapastorFT.jpg");
-            receta.foto = uri;
-            listaRecetasFavoritas.add(receta);
-        }
+        BdRecetaAPI apiReceta = BdRecetaAPI.getInstance();
+        listaRecetasFavoritas = apiReceta.favoritos();
     }
 }

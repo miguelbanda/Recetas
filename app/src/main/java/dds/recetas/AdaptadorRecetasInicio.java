@@ -43,7 +43,7 @@ public class AdaptadorRecetasInicio extends RecyclerView.Adapter<AdaptadorReceta
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolderRecetas holder, final int position) {
-        holder.fotoReceta.setImageURI(listaRecetasInicio.get(position).foto);
+        Picasso.get().load(listaRecetasInicio.get(position).foto).into(holder.fotoReceta);
         holder.nombreReceta.setText(listaRecetasInicio.get(position).nombre);
 
         holder.layoutItem.setOnClickListener(new View.OnClickListener() {

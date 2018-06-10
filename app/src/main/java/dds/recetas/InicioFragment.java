@@ -22,6 +22,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
+import dds.recetas.datos.BdRecetaAPI;
 import dds.recetas.datos.Receta;
 
 public class InicioFragment extends Fragment {
@@ -50,11 +51,8 @@ public class InicioFragment extends Fragment {
     }
 
     private void llenarInicio() {
-        for (int i = 1; i <= 10; i++ ) {
-            Receta receta = new Receta();
-            receta.nombre = ("Receta " + i);
-            receta.foto = Uri.parse("https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Paella_de_mariscos.jpg/220px-Paella_de_mariscos.jpg");
-            listaRecetasInicio.add(receta);
-        }
+
+        BdRecetaAPI apiBD = BdRecetaAPI.getInstance();
+        listaRecetasInicio = apiBD.buscarRecetaPorTitulo("");
     }
 }

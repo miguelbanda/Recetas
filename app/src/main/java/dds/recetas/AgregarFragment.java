@@ -1,9 +1,11 @@
 package dds.recetas;
 
 import android.app.Application;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.MimeTypeMap;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -25,6 +28,17 @@ import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +58,7 @@ public class AgregarFragment extends Fragment implements AdapterView.OnItemSelec
     Button botonAgregarIngrediente, botonAgregarPaso, botonBuscarImagen, botonGuardarReceta;
     EditText nombreReceta, primerPaso, primerIngrediente;
     ImageView imageViewReceta;
-    String tituloReceta;
+    String tituloReceta, stringImagen = "";
     List<EditText> editIngredientes = new ArrayList<EditText>();
     List<EditText> editPasos = new ArrayList<EditText>();
     List<Paso> listaPasos = new ArrayList<Paso>();
@@ -58,6 +72,9 @@ public class AgregarFragment extends Fragment implements AdapterView.OnItemSelec
     public ArrayAdapter<String> adaptadorRegimen;
     public ArrayAdapter<String> adaptadorPorciones;
 
+    private StorageReference recetasStorageRef;
+    private DatabaseReference baseRef;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -65,6 +82,7 @@ public class AgregarFragment extends Fragment implements AdapterView.OnItemSelec
         //((Main)getActivity()).hideFAB();
 
         final Application application = getActivity().getApplication();
+        recetasStorageRef = FirebaseStorage.getInstance().getReference("recetas");
 
         final ScrollView fragmentAgregar = (ScrollView) inflater.inflate(R.layout.fragment_agregar, container, false);
 
@@ -131,11 +149,11 @@ public class AgregarFragment extends Fragment implements AdapterView.OnItemSelec
                     Toast.makeText(fragmentAgregar.getContext(),"No se puede agregar receta", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    Toast.makeText(fragmentAgregar.getContext(),"Receta agregada", Toast.LENGTH_SHORT).show();
-                    Receta nuevaReceta = new Receta(tituloReceta, urlImagen, regimen, tipo, listaIngredientes, listaPasos);
 
-                    BdRecetaAPI apiBaseDeDatos = BdRecetaAPI.getInstance(application);
-                    apiBaseDeDatos.crearReceta(nuevaReceta);
+                    cargarReceta();
+
+
+
                 }
             }
         });
@@ -143,11 +161,9 @@ public class AgregarFragment extends Fragment implements AdapterView.OnItemSelec
         botonBuscarImagen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //cargarImagen();
-                urlImagen = null;
+                cargarImagen();
             }
         });
-
         return fragmentAgregar;
     }
 
@@ -160,10 +176,51 @@ public class AgregarFragment extends Fragment implements AdapterView.OnItemSelec
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == RESULT_OK) {
+        if(resultCode == RESULT_OK && data != null && data.getData() != null) {
             urlImagen = data.getData();
-            imageViewReceta.setImageURI(urlImagen);
+            Picasso.get().load(urlImagen).into(imageViewReceta);
         }
+    }
+
+    private void cargarReceta() {
+        if(urlImagen != null){
+            StorageReference fileReference = recetasStorageRef.child(System.currentTimeMillis() + "." + getFileExtension(urlImagen));
+            fileReference.putFile(urlImagen)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                            Toast.makeText(getContext(),"Se ha cargado la imagen", Toast.LENGTH_SHORT).show();stringImagen = taskSnapshot.getDownloadUrl().toString();Log.d("onSuccess", stringImagen, null);
+                            BdRecetaAPI apiBaseDeDatos = BdRecetaAPI.getInstance();
+                            Receta nuevaReceta = new Receta(tituloReceta, stringImagen, regimen, tipo, listaIngredientes, listaPasos);
+                            apiBaseDeDatos.crearReceta(nuevaReceta);
+                            Toast.makeText(getContext(),"Receta agregada", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), stringImagen, Toast.LENGTH_SHORT).show();
+
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+
+                        }
+                    });
+
+        } else {
+            Toast.makeText(getContext(), "No se puede agregar imagen", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private String getFileExtension (Uri uri) {
+        ContentResolver cr = getActivity().getContentResolver();
+        MimeTypeMap mime = MimeTypeMap.getSingleton();
+        return mime.getExtensionFromMimeType(cr.getType(uri));
     }
 
     public void setAdaptadoresSpinners(){

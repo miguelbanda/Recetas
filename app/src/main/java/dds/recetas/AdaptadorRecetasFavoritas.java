@@ -41,7 +41,7 @@ public class AdaptadorRecetasFavoritas extends RecyclerView.Adapter<AdaptadorRec
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolderPersonajes holder, final int position) {
-        holder.fotoReceta.setImageURI(listaRecetasFavoritas.get(position).foto);
+        Picasso.get().load(listaRecetasFavoritas.get(position).foto).into(holder.fotoReceta);
         holder.nombreReceta.setText(listaRecetasFavoritas.get(position).nombre);
 
         holder.layoutReceta.setOnClickListener(new View.OnClickListener() {
@@ -60,6 +60,10 @@ public class AdaptadorRecetasFavoritas extends RecyclerView.Adapter<AdaptadorRec
 
     @Override
     public int getItemCount() {
+        if(listaRecetasFavoritas.isEmpty())
+        {
+            return 0;
+        }
         return listaRecetasFavoritas.size();
     }
 
