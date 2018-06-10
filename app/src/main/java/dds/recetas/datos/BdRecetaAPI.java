@@ -36,8 +36,8 @@ public class BdRecetaAPI {
         List<Receta> resultado = new ArrayList<>();
         for(Receta r : recetas) {
             if(r.nombre.toLowerCase().contains(titulo.toLowerCase())
-                    && (tipo == r.tipo || tipo == Tipo.INDIFERENTE)
-                    && (regimen == r.regimen || regimen == Regimen.OMNI)) {
+                    && (tipo.toString() == r.tipo || tipo == Tipo.INDIFERENTE)
+                    && (regimen.toString() == r.regimen || regimen == Regimen.OMNI)) {
                 resultado.add(r);
             }
         }

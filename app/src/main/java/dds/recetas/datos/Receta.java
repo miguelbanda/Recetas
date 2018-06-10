@@ -11,8 +11,8 @@ public class Receta {
     public String nombre;
     public Uri foto;
     public boolean favorito;
-    public Regimen regimen;
-    public Tipo tipo;
+    public String regimen;
+    public String tipo;
     public List<Ingrediente> ingredientes;
     public List<Paso> pasos;
 
@@ -20,8 +20,8 @@ public class Receta {
         this.nombre = nombre;
         this.foto = foto;
         this.favorito = false;
-        this.regimen = regimen;
-        this.tipo = tipo;
+        this.regimen = regimen.toString();
+        this.tipo = tipo.toString();
         this.ingredientes = ingredientes;
         this.pasos = pasos;
     }
