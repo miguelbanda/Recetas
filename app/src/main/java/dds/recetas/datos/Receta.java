@@ -20,7 +20,7 @@ public class Receta {
     public Receta(String nombre, String foto, Regimen regimen, Tipo tipo, List<Ingrediente> ingredientes, List<Paso> pasos, int porciones) {
         this.nombre = nombre;
         this.foto = foto;
-        this.favorito = false;
+        this.favorito = true;
         this.regimen = regimen.toString();
         this.tipo = tipo.toString();
         this.ingredientes = ingredientes;

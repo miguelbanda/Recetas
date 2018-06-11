@@ -99,7 +99,8 @@
         android:layout_height="wrap_content"
         android:layout_weight="6"
         android:orientation="vertical"
-        android:id="@+id/ingredientesAMostrar">
+        android:id="@+id/ingredientesAMostrar"
+        android:layout_margin="10dp">
 
         <TextView
             android:id="@+id/textView"
@@ -107,7 +108,8 @@
             android:layout_height="wrap_content"
             android:text="Ingredientes:"
             android:textStyle="bold"
-            android:layout_margin="5dp"/>
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -115,7 +117,7 @@
         android:layout_weight="6"
         android:orientation="vertical"
         android:id="@+id/pasosAMostrar"
-        android:layout_marginBottom="20dp">
+        android:layout_margin="10dp">
 
         <TextView
             android:id="@+id/textView2"
@@ -123,7 +125,8 @@
             android:layout_height="wrap_content"
             android:text="Pasos:"
             android:textStyle="bold"
-            android:layout_margin="5dp"/>
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"/>
     </LinearLayout>
 
 </LinearLayout>

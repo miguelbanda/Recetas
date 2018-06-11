@@ -24,6 +24,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dds.recetas.datos.BdRecetaAPI;
+import dds.recetas.datos.FiltroQuery;
+import dds.recetas.datos.FiltroQueryFactory;
 import dds.recetas.datos.Ingrediente;
 import dds.recetas.datos.Paso;
 import dds.recetas.datos.Receta;
@@ -56,6 +58,10 @@ public class FavoritosFragment extends Fragment {
                     Receta receta = postSnapshot.getValue(Receta.class);
                     listaRecetasFavoritas.add(receta);
                 }
+
+                FiltroQueryFactory fab = FiltroQueryFactory.getInstance();
+                FiltroQuery filtro = fab.build(true);
+                listaRecetasFavoritas = Receta.filtrar(listaRecetasFavoritas, filtro);
 
                 AdaptadorRecetasFavoritas adaptador = new AdaptadorRecetasFavoritas(linearFavoritos.getContext(), listaRecetasFavoritas);
                 recyclerRecetasFavoritas.setAdapter(adaptador);
