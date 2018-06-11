@@ -24,6 +24,13 @@
         <item>Principal</item>
     </string-array>
 
+    <string-array name="tiposAgregar">
+        <item>Entrante</item>
+        <item>Aperitivo</item>
+        <item>Postre</item>
+        <item>Principal</item>
+    </string-array>
+
     <string-array name="regimenes">
         <item>Indiferente</item>
         <item>Vegano</item>

@@ -33,7 +33,6 @@ public class MostrarReceta extends AppCompatActivity {
     Receta recetaMostrada;
     List<Receta> recetas;
     String idReceta, nombreReceta, porcionesReceta, tipoReceta, regimenReceta, urlImagenReceta;
-    List<String> pasosReceta, ingredientesReceta;
     List<Ingrediente> ingredientes;
     List<Paso> pasos;
     TextView tv_titulo, tv_porciones, tv_tipo, tv_regimen;
@@ -82,9 +81,11 @@ public class MostrarReceta extends AppCompatActivity {
 
         if (esFavorito) {
             getMenuInflater().inflate(R.menu.quitar_favorito, menuFavorito);
+            Toast.makeText(MostrarReceta.this, "Receta agregada a favoritas", Toast.LENGTH_SHORT).show();
         }
         else {
             getMenuInflater().inflate(R.menu.agregar_favorito, menuFavorito);
+            Toast.makeText(MostrarReceta.this, "Receta eliminada de favoritas", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -109,7 +110,11 @@ public class MostrarReceta extends AppCompatActivity {
         ingredientes = recetaMostrada.getIngredientes();
         pasos = recetaMostrada.getPasos();
 
-        Picasso.get().load(urlImagenReceta).into(imagenReceta);
+        Picasso.get().load(urlImagenReceta)
+                .resize(100,100)
+                .onlyScaleDown()
+                .centerCrop()
+                .into(imagenReceta);
         tv_titulo.setText(nombreReceta);
         tv_porciones.setText("Porciones: " + porcionesReceta);
         tv_tipo.setText("Tipo: " + tipoReceta);
@@ -128,7 +133,7 @@ public class MostrarReceta extends AppCompatActivity {
             TextView pasoN = new TextView(MostrarReceta.this);
             pasoN.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.MATCH_PARENT));
-            pasoN.setText(pasos.get(i).getPaso());
+            pasoN.setText(String.valueOf(i + 1) + ".- " + pasos.get(i).getPaso());
 
             layoutPadre.addView(pasoN);
         }
@@ -142,7 +147,7 @@ public class MostrarReceta extends AppCompatActivity {
             TextView ingredienteN = new TextView(MostrarReceta.this);
             ingredienteN.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.MATCH_PARENT));
-            ingredienteN.setText(ingredientes.get(i).getNombre());
+            ingredienteN.setText("- " + ingredientes.get(i).getNombre());
 
             layoutPadre.addView(ingredienteN);
         }

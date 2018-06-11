@@ -34,9 +34,8 @@ import java.util.List;
 
 import dds.recetas.datos.Receta;
 
-public class Main extends AppCompatActivity {
+public class Main extends AppCompatActivity implements TabLayout.OnTabSelectedListener{
 
-    public List<Receta> listaInicio;
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -47,7 +46,6 @@ public class Main extends AppCompatActivity {
      */
     private SectionsPagerAdapter mSectionsPagerAdapter;
     FloatingActionButton fab;
-    private DatabaseReference databaseRef;
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -65,13 +63,12 @@ public class Main extends AppCompatActivity {
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
-
-
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout.addOnTabSelectedListener(this);
 
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
@@ -86,22 +83,6 @@ public class Main extends AppCompatActivity {
         });
     }
 
-    public void hideFAB(){
-        fab.hide();
-    }
-
-    public void showFAB(){
-        fab.show();
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -114,6 +95,34 @@ public class Main extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onTabSelected(TabLayout.Tab tab) {
+        switch (tab.getPosition()){
+            case 0:
+                fab.show();
+                break;
+            case 1:
+                fab.show();
+                break;
+            case 2:
+                fab.hide();
+                break;
+                default:
+                    fab.show();
+                break;
+        }
+    }
+
+    @Override
+    public void onTabUnselected(TabLayout.Tab tab) {
+
+    }
+
+    @Override
+    public void onTabReselected(TabLayout.Tab tab) {
+
     }
 
 
@@ -149,25 +158,7 @@ public class Main extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
             return 3;
-        }
-
-        public void animateFab(int position) {
-            switch (position) {
-                case 0:
-                    fab.show();
-                    break;
-                case 1:
-                    fab.show();
-                    break;
-                case 2:
-                    fab.hide();
-                    break;
-                default:
-                    fab.show();
-                    break;
-            }
         }
     }
 }

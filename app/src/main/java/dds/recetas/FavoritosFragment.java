@@ -42,7 +42,6 @@ public class FavoritosFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-
         final CoordinatorLayout linearFavoritos = (CoordinatorLayout) inflater.inflate(R.layout.fragment_favoritos, container, false);
 
         listaRecetasFavoritas = new ArrayList<>();
@@ -64,7 +63,7 @@ public class FavoritosFragment extends Fragment {
                 FiltroQuery filtro = fab.build(true);
                 listaRecetasFavoritas = Receta.filtrar(listaRecetasFavoritas, filtro);
 
-                AdaptadorRecetasFavoritas adaptador = new AdaptadorRecetasFavoritas(linearFavoritos.getContext(), listaRecetasFavoritas);
+                AdaptadorRecetas adaptador = new AdaptadorRecetas(linearFavoritos.getContext(), listaRecetasFavoritas);
                 recyclerRecetasFavoritas.setAdapter(adaptador);
             }
 

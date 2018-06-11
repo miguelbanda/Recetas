@@ -1,12 +1,10 @@
 package dds.recetas;
 
-import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -18,10 +16,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import dds.recetas.datos.BdRecetaAPI;
 import dds.recetas.datos.FiltroQuery;
 import dds.recetas.datos.FiltroQueryFactory;
-import dds.recetas.datos.Ingrediente;
 import dds.recetas.datos.Receta;
 import dds.recetas.datos.Regimen;
 import dds.recetas.datos.Tipo;
@@ -67,7 +63,7 @@ public class Resultado extends AppCompatActivity {
                 FiltroQuery filtro = fab.build(null, receta, tipo, regimen, ingrediente);
                 listaRecetasBusqueda = Receta.filtrar(listaRecetasBusqueda, filtro);
 
-                AdaptadorRecetasInicio adaptador = new AdaptadorRecetasInicio(Resultado.this, listaRecetasBusqueda);
+                AdaptadorRecetas adaptador = new AdaptadorRecetas(Resultado.this, listaRecetasBusqueda);
                 recyclerRecetasBusqueda.setAdapter(adaptador);
 
             }
