@@ -42,11 +42,11 @@ public class Receta {
         return resultado;
     }
 
-    public static List<Receta> filtrar(List<Receta> recetas, FiltroQuery... queries) {
+    public static List<Receta> filtrar(List<Receta> recetas, List<FiltroQuery> queries) {
         List<Receta> resultado = recetas;
 
-        for(int i = 0; i < queries.length; i++) {
-            resultado = filtrar(resultado, queries[i]);
+        for(FiltroQuery query : queries) {
+            resultado = filtrar(resultado, query);
         }
 
         return resultado;
