@@ -300,10 +300,10 @@ public class AgregarFragment extends Fragment implements AdapterView.OnItemSelec
     public void crearListaPasos() {
 
         Paso pasoPrimero = new Paso();
-        pasoPrimero.numero = 1;
+        pasoPrimero.setNumero(1);
         String pasoUno = primerPaso.getText().toString();
         if (verificaStringNoVacia(pasoUno)) {
-            pasoPrimero.paso = pasoUno;
+            pasoPrimero.setPaso(pasoUno);
             listaPasos.add(pasoPrimero);
         }
 
@@ -311,8 +311,8 @@ public class AgregarFragment extends Fragment implements AdapterView.OnItemSelec
             String pasoN = editPasos.get(i).getText().toString();
             Paso pasoNuevo = new Paso();
             if(verificaStringNoVacia(pasoN)) {
-                pasoNuevo.numero = i + 2;
-                pasoNuevo.paso = pasoN;
+                pasoNuevo.setNumero(i + 2);
+                pasoNuevo.setPaso(pasoN);
                 listaPasos.add(pasoNuevo);
             }
         }

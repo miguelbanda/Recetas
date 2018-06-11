@@ -135,7 +135,7 @@ public class MostrarReceta extends AppCompatActivity {
             TextView pasoN = new TextView(MostrarReceta.this);
             pasoN.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.MATCH_PARENT));
-            pasoN.setText(pasos.get(i).paso);
+            pasoN.setText(pasos.get(i).getPaso());
 
             layoutPadre.addView(pasoN);
         }
