@@ -36,13 +36,14 @@ public class BuscarReceta extends AppCompatActivity implements AdapterView.OnIte
         setContentView(R.layout.activity_buscar_receta);
 
         spinnerTipo = findViewById(R.id.spinnerTipo);
-        spinnerRegimen = findViewById(R.id.spinnerRegimen);
-
+        spinnerTipo.setOnItemSelectedListener(this);
         ArrayAdapter<String> adaptadorTipo = new ArrayAdapter<String>(BuscarReceta.this,
                 android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.tipos));
         adaptadorTipo.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerTipo.setAdapter(adaptadorTipo);
 
+        spinnerRegimen = findViewById(R.id.spinnerRegimen);
+        spinnerRegimen.setOnItemSelectedListener(this);
         ArrayAdapter<String> adaptadorRegimen = new ArrayAdapter<String>(BuscarReceta.this,
                 android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.regimenes));
         adaptadorRegimen.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -92,7 +93,7 @@ public class BuscarReceta extends AppCompatActivity implements AdapterView.OnIte
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        if(parent.equals(R.id.spinnerTipo)) {
+        if(parent == spinnerTipo) {
             switch (position) {
                 case 0:
                     tipo = Tipo.INDIFERENTE;
@@ -114,7 +115,7 @@ public class BuscarReceta extends AppCompatActivity implements AdapterView.OnIte
                     break;
             }
         }
-        else if (parent.equals(R.id.spinnerRegimen)) {
+        else if (parent == spinnerRegimen) {
             switch (position) {
                 case 0:
                     regimen= Regimen.OMNI;
@@ -134,10 +135,10 @@ public class BuscarReceta extends AppCompatActivity implements AdapterView.OnIte
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-        if(parent.equals(R.id.spinnerTipoAgregar)) {
+        if(parent == spinnerTipo) {
             tipo = Tipo.INDIFERENTE;
         }
-        if(parent.equals(R.id.spinnerRegimenAgregar)) {
+        if(parent == spinnerRegimen) {
             regimen = Regimen.OMNI;
         }
     }

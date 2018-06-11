@@ -33,7 +33,7 @@ import dds.recetas.datos.Receta;
 
 public class InicioFragment extends Fragment {
 
-    public List<Receta> listaRecetasInicio;
+    private List<Receta> listaRecetasInicio;
     RecyclerView recyclerRecetasInicio;
     private DatabaseReference databaseRef;
 

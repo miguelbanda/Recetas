@@ -44,6 +44,8 @@ public class Resultado extends AppCompatActivity {
 
         listaRecetasBusqueda = new ArrayList<>();
         recyclerRecetasBusqueda = findViewById(R.id.recyclerResultado);
+        recyclerRecetasBusqueda.setLayoutManager(new LinearLayoutManager(getApplicationContext(),
+                LinearLayoutManager.VERTICAL, false));
 
         Bundle bundle = getIntent().getExtras();
         receta = bundle.getString("RECETA");

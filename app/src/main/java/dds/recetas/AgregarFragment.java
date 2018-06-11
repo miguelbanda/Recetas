@@ -250,7 +250,7 @@ public class AgregarFragment extends Fragment implements AdapterView.OnItemSelec
 
     public void setAdaptadoresSpinners(){
 
-         adaptadorTipo = new ArrayAdapter<String>(this.getContext(),
+        adaptadorTipo = new ArrayAdapter<String>(this.getContext(),
                 android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.tipos));
         adaptadorTipo.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerTipoAgregar.setAdapter(adaptadorTipo);
