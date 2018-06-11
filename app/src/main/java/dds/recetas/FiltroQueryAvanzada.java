@@ -9,8 +9,8 @@ public class FiltroQueryAvanzada implements FiltroQuery {
 
     private List<FiltroQuery> filtros;
 
-    public FiltroQueryAvanzada(FiltroQuery... filtros) {
-        this.filtros = Arrays.asList(filtros);
+    public FiltroQueryAvanzada(List<FiltroQuery> filtros) {
+        this.filtros = filtros;
     }
 
     @Override
