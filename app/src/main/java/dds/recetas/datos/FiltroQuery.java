@@ -1,4 +1,4 @@
-package dds.recetas;
+package dds.recetas.datos;
 
 import dds.recetas.datos.Receta;
 

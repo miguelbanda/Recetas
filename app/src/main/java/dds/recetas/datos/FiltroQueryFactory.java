@@ -1,10 +1,7 @@
-package dds.recetas;
+package dds.recetas.datos;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import dds.recetas.datos.Regimen;
-import dds.recetas.datos.Tipo;
 
 public class FiltroQueryFactory {
 

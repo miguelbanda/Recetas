@@ -1,9 +1,6 @@
-package dds.recetas;
+package dds.recetas.datos;
 
-import java.util.Arrays;
 import java.util.List;
-
-import dds.recetas.datos.Receta;
 
 public class FiltroQueryAvanzada implements FiltroQuery {
 

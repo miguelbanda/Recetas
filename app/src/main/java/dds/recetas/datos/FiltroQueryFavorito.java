@@ -1,6 +1,4 @@
-package dds.recetas;
-
-import dds.recetas.datos.Receta;
+package dds.recetas.datos;
 
 public class FiltroQueryFavorito implements FiltroQuery {
 

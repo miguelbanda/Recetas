@@ -5,8 +5,6 @@ import com.google.firebase.database.IgnoreExtraProperties;
 import java.util.ArrayList;
 import java.util.List;
 
-import dds.recetas.FiltroQuery;
-
 @IgnoreExtraProperties
 public class Receta {
     public String id;

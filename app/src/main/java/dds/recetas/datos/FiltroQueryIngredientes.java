@@ -1,7 +1,4 @@
-package dds.recetas;
-
-import dds.recetas.datos.Ingrediente;
-import dds.recetas.datos.Receta;
+package dds.recetas.datos;
 
 public class FiltroQueryIngredientes implements FiltroQuery {
     private String criterio;

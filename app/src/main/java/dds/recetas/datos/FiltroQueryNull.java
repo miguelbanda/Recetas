@@ -1,6 +1,4 @@
-package dds.recetas;
-
-import dds.recetas.datos.Receta;
+package dds.recetas.datos;
 
 //Null object
 public class FiltroQueryNull implements FiltroQuery {
