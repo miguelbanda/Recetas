@@ -19,12 +19,43 @@ public class FiltroQueryFactory {
 
     //Métodos fábrica
 
+    //Refactoring: métodos fábrica con menos parámetros para filtrar con solo 1 criterio
+
     public FiltroQuery build() {
         return new FiltroQueryNull();
     }
 
     public FiltroQuery build(boolean favorito) {
         return new FiltroQueryFavorito(favorito);
+    }
+
+    public FiltroQuery build(Tipo t) {
+        if(t == null || t == Tipo.INDIFERENTE) {
+            return new FiltroQueryNull();
+        }
+
+        return new FiltroQueryTipo(t);
+    }
+
+    public FiltroQuery build(Regimen r) {
+        if(r == null || r == Regimen.OMNI) {
+            return new FiltroQueryNull();
+        }
+
+        return new FiltroQueryRegimen(r);
+    }
+
+    public enum TipoFiltro { ID, NOMBRE, INGREDIENTE }
+
+    public FiltroQuery build(String value, TipoFiltro t) {
+        switch (t) {
+            case ID:
+                return new FiltroQueryId(value);
+            case NOMBRE:
+                return new FiltroQueryNombre(value);
+            default:
+                return new FiltroQueryIngredientes(value);
+        }
     }
 
     //Refactoring : valor de los booleanos en variables en vez de hacer varias invocaciones
