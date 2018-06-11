@@ -26,6 +26,10 @@ public class FiltroQueryFactory {
         return new FiltroQueryNull();
     }
 
+    public FiltroQuery build(boolean favorito) {
+        return new FiltroQueryFavorito(favorito);
+    }
+
     public FiltroQuery build(String id, String nombre, Tipo tipo, Regimen regimen, String ingrediente) {
 
         if(!isEmpty(id) && isEmpty(nombre) && isEmpty(tipo)
