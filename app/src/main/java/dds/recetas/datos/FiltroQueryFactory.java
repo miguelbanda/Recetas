@@ -5,12 +5,12 @@ import java.util.List;
 
 public class FiltroQueryFactory {
 
-    private FiltroQueryFactory INSTANCE;
+    private static FiltroQueryFactory INSTANCE;
 
     private FiltroQueryFactory() {}
 
     //Singleton
-    private FiltroQueryFactory getInstance() {
+    public static FiltroQueryFactory getInstance() {
         if(INSTANCE == null) {
             INSTANCE = new FiltroQueryFactory();
         }
@@ -53,8 +53,10 @@ public class FiltroQueryFactory {
                 return new FiltroQueryId(value);
             case NOMBRE:
                 return new FiltroQueryNombre(value);
-            default:
+            case INGREDIENTE:
                 return new FiltroQueryIngredientes(value);
+            default:
+                return new FiltroQueryNull();
         }
     }
 
