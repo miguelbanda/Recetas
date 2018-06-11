@@ -85,16 +85,25 @@ public class FiltroQueryFactory {
         } else {//Búsqueda avanzada
             List<FiltroQuery> filtros = new ArrayList<>();
 
-            if(!bNombre)
+            if(!bNombre) {
                 filtros.add(new FiltroQueryNombre(nombre));
-            if(!bRegimen)
+            }
+
+            if(!bRegimen) {
                 filtros.add(new FiltroQueryTipo(tipo));
-            if(!bTipo)
+            }
+
+            if(!bTipo) {
                 filtros.add(new FiltroQueryRegimen(regimen));
-            if(!bIngrediente)
+            }
+
+            if(!bIngrediente) {
                 filtros.add(new FiltroQueryIngredientes(ingrediente));
-            if(!bId)
+            }
+
+            if(!bId) {
                 filtros.add(new FiltroQueryId(id));
+            }
 
             return new FiltroQueryAvanzada(filtros);
         }
