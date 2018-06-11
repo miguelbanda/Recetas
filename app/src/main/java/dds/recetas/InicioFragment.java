@@ -15,8 +15,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 import android.widget.Toolbar;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -29,30 +35,41 @@ public class InicioFragment extends Fragment {
 
     public List<Receta> listaRecetasInicio;
     RecyclerView recyclerRecetasInicio;
+    private DatabaseReference databaseRef;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         ((Main)getActivity()).showFAB();
-        CoordinatorLayout fragment = (CoordinatorLayout) inflater.inflate(R.layout.fragment_inicio, container, false);
+        final CoordinatorLayout fragment = (CoordinatorLayout) inflater.inflate(R.layout.fragment_inicio, container, false);
 
-        listaRecetasInicio = new ArrayList<>();
         recyclerRecetasInicio = fragment.findViewById(R.id.recyclerInicio);
         recyclerRecetasInicio.setLayoutManager(new LinearLayoutManager(fragment.getContext(),
                 LinearLayoutManager.VERTICAL, false));
 
-        llenarInicio();
+        listaRecetasInicio = new ArrayList<>();
 
-        AdaptadorRecetasInicio adaptador = new AdaptadorRecetasInicio(this.getContext(), listaRecetasInicio);
-        recyclerRecetasInicio.setAdapter(adaptador);
+        databaseRef = FirebaseDatabase.getInstance().getReference("recetas");
+        databaseRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    Receta receta = postSnapshot.getValue(Receta.class);
+                    listaRecetasInicio.add(receta);
+                }
+
+                AdaptadorRecetasInicio adaptador = new AdaptadorRecetasInicio(fragment.getContext(), listaRecetasInicio);
+                recyclerRecetasInicio.setAdapter(adaptador);
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(getContext(), databaseError.getMessage(),Toast.LENGTH_SHORT).show();
+            }
+        });
 
         return fragment;
-    }
-
-    private void llenarInicio() {
-
-        BdRecetaAPI apiBD = BdRecetaAPI.getInstance();
-        listaRecetasInicio = apiBD.buscarRecetaPorTitulo("");
     }
 }

@@ -58,7 +58,9 @@ public class AgregarFragment extends Fragment implements AdapterView.OnItemSelec
     Button botonAgregarIngrediente, botonAgregarPaso, botonBuscarImagen, botonGuardarReceta;
     EditText nombreReceta, primerPaso, primerIngrediente;
     ImageView imageViewReceta;
-    String tituloReceta, stringImagen = "";
+    String tituloReceta,
+            stringImagen = "https://firebasestorage.googleapis.com/v0/b/recetas-53da2.appspot.com/o/recetas%2Fnotfound.png?alt=media&token=1b9b07ee-d785-4138-8ecf-8665c03acc6b";
+    //Refactoring: No poner cadena vacia porque da error, poner por default imagen de error cargada en la base de datos
     List<EditText> editIngredientes = new ArrayList<EditText>();
     List<EditText> editPasos = new ArrayList<EditText>();
     List<Paso> listaPasos = new ArrayList<Paso>();
@@ -149,11 +151,7 @@ public class AgregarFragment extends Fragment implements AdapterView.OnItemSelec
                     Toast.makeText(fragmentAgregar.getContext(),"No se puede agregar receta", Toast.LENGTH_SHORT).show();
                 }
                 else {
-
                     cargarReceta();
-
-
-
                 }
             }
         });
@@ -190,9 +188,9 @@ public class AgregarFragment extends Fragment implements AdapterView.OnItemSelec
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
-                            Toast.makeText(getContext(),"Se ha cargado la imagen", Toast.LENGTH_SHORT).show();stringImagen = taskSnapshot.getDownloadUrl().toString();Log.d("onSuccess", stringImagen, null);
+                            stringImagen = taskSnapshot.getDownloadUrl().toString();
                             BdRecetaAPI apiBaseDeDatos = BdRecetaAPI.getInstance();
-                            Receta nuevaReceta = new Receta(tituloReceta, stringImagen, regimen, tipo, listaIngredientes, listaPasos);
+                            Receta nuevaReceta = new Receta(tituloReceta, stringImagen, regimen, tipo, listaIngredientes, listaPasos, porciones);
                             apiBaseDeDatos.crearReceta(nuevaReceta);
                             Toast.makeText(getContext(),"Receta agregada", Toast.LENGTH_SHORT).show();
                             Toast.makeText(getContext(), stringImagen, Toast.LENGTH_SHORT).show();

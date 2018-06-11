@@ -21,14 +21,22 @@ import android.view.ViewGroup;
 
 import android.widget.TabHost;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import dds.recetas.datos.Receta;
 
 public class Main extends AppCompatActivity {
 
-    public ArrayList<Receta> listaBusqueda;
+    public List<Receta> listaInicio;
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -39,6 +47,7 @@ public class Main extends AppCompatActivity {
      */
     private SectionsPagerAdapter mSectionsPagerAdapter;
     FloatingActionButton fab;
+    private DatabaseReference databaseRef;
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -55,6 +64,8 @@ public class Main extends AppCompatActivity {
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+
+
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);

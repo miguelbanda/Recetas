@@ -15,8 +15,9 @@ public class Receta {
     public String tipo;
     public List<Ingrediente> ingredientes;
     public List<Paso> pasos;
+    public int porciones;
 
-    public Receta(String nombre, String foto, Regimen regimen, Tipo tipo, List<Ingrediente> ingredientes, List<Paso> pasos) {
+    public Receta(String nombre, String foto, Regimen regimen, Tipo tipo, List<Ingrediente> ingredientes, List<Paso> pasos, int porciones) {
         this.nombre = nombre;
         this.foto = foto;
         this.favorito = false;
@@ -24,6 +25,7 @@ public class Receta {
         this.tipo = tipo.toString();
         this.ingredientes = ingredientes;
         this.pasos = pasos;
+        this.porciones = porciones;
     }
 
     public Receta() {

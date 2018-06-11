@@ -50,19 +50,14 @@ public class AdaptadorRecetasInicio extends RecyclerView.Adapter<AdaptadorReceta
             @Override
             public void onClick(View v) {
                 Intent nuevaActividad = new Intent(context, MostrarReceta.class);
-                String nombre = listaRecetasInicio.get(position).nombre;
-                nuevaActividad.putExtra("tituloReceta", nombre);
+                String idReceta = listaRecetasInicio.get(position).id;
+                nuevaActividad.putExtra("id", idReceta);
 
-                Toast.makeText(context, "Click on " + nombre, Toast.LENGTH_SHORT).show();
+                Toast.makeText(context,"Click on: " + idReceta, Toast.LENGTH_SHORT).show();
 
                 context.startActivity(nuevaActividad);
             }
         });
-
-
-
-
-
     }
 
     @Override
