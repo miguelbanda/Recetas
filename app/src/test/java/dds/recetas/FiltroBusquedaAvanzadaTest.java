@@ -20,10 +20,10 @@ public class FiltroBusquedaAvanzadaTest {
         List<Receta> recetas = new ArrayList<>();
         for(int i = 0; i < n; i++) {
             recetas.add(new Receta());
-            recetas.get(i).regimen = Regimen.OMNI.toString();
-            recetas.get(i).tipo = Tipo.POSTRE.toString();
+            recetas.get(i).setRegimen(Regimen.OMNI);
+            recetas.get(i).setTipo(Tipo.POSTRE);
         }
-        recetas.get(1).regimen = Regimen.VEGANO.toString();
+        recetas.get(1).setRegimen(Regimen.VEGANO);
 
         FiltroQueryFactory fab = FiltroQueryFactory.getInstance();
         FiltroQuery filtro = fab.build(null, null, Tipo.POSTRE, Regimen.VEGANO, null);

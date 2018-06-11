@@ -19,10 +19,10 @@ public class FiltroTipoTest {
         List<Receta> recetas = new ArrayList<>();
         for(int i = 0; i < n; i++) {
             recetas.add(new Receta());
-            recetas.get(i).tipo = Tipo.PRINCIPAL.toString();
+            recetas.get(i).setTipo(Tipo.PRINCIPAL);
         }
 
-        recetas.get(1).tipo = Tipo.POSTRE.toString();
+        recetas.get(1).setTipo(Tipo.POSTRE);
 
         FiltroQueryFactory fab = FiltroQueryFactory.getInstance();
         FiltroQuery filtro = fab.build(Tipo.POSTRE);

@@ -111,8 +111,8 @@ public class MostrarReceta extends AppCompatActivity {
         nombreReceta = recetaMostrada.getNombre();
         urlImagenReceta = recetaMostrada.getFoto();
         porcionesReceta = String.valueOf(recetaMostrada.getPorciones());
-        tipoReceta = recetaMostrada.getTipo();
-        regimenReceta = recetaMostrada.getRegimen();
+        tipoReceta = recetaMostrada.getTipo().toString();
+        regimenReceta = recetaMostrada.getRegimen().toString();
         ingredientes = recetaMostrada.getIngredientes();
         pasos = recetaMostrada.getPasos();
 
@@ -149,7 +149,7 @@ public class MostrarReceta extends AppCompatActivity {
             TextView ingredienteN = new TextView(MostrarReceta.this);
             ingredienteN.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.MATCH_PARENT));
-            ingredienteN.setText(ingredientes.get(i).nombre);
+            ingredienteN.setText(ingredientes.get(i).getNombre());
 
             layoutPadre.addView(ingredienteN);
         }

@@ -18,7 +18,7 @@ public class FiltroIdTest {
         List<Receta> recetas = new ArrayList<>();
         for(int i = 0; i < n; i++) {
             recetas.add(new Receta());
-            recetas.get(i).id = String.valueOf(i+1);
+            recetas.get(i).setId(String.valueOf(i+1));
         }
 
         FiltroQueryFactory fab = FiltroQueryFactory.getInstance();
@@ -27,6 +27,6 @@ public class FiltroIdTest {
         List<Receta> filtradas = Receta.filtrar(recetas, filtro);
 
         assertEquals(1, filtradas.size());
-        assertEquals("4", filtradas.get(0).id);
+        assertEquals("4", filtradas.get(0).getId());
     }
 }

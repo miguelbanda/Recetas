@@ -41,10 +41,10 @@ public class BdRecetaAPI {
 
         for(Receta r : recetas) {
             if(r.getNombre().toLowerCase().contains(titulo.toLowerCase())
-                    && (tipo.toString() == r.getTipo() || tipo == Tipo.INDIFERENTE)
-                    && (regimen.toString() == r.getRegimen() || regimen == Regimen.OMNI)) {
+                    && (tipo == r.getTipo() || tipo == Tipo.INDIFERENTE)
+                    && (regimen == r.getRegimen() || regimen == Regimen.OMNI)) {
                 for(Ingrediente i : r.getIngredientes()) {
-                    if(i.nombre.contains(ingrediente)) {
+                    if(i.getNombre().contains(ingrediente)) {
                         resultado.add(r);
                         break;
                     }

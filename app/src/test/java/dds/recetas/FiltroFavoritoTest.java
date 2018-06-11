@@ -19,7 +19,7 @@ public class FiltroFavoritoTest {
         for(int i = 0; i < n; i++) {
             recetas.add(new Receta());
         }
-        recetas.get(2).favorito = true;
+        recetas.get(2).setFavorito(true);
 
         FiltroQueryFactory fab = FiltroQueryFactory.getInstance();
         FiltroQuery filtro = fab.build(true);

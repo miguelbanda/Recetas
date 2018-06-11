@@ -21,8 +21,8 @@ public class Receta {
         this.setNombre(nombre);
         this.setFoto(foto);
         this.setFavorito(true);
-        this.setRegimen(regimen.toString());
-        this.setTipo(tipo.toString());
+        this.setRegimen(regimen);
+        this.setTipo(tipo);
         this.setIngredientes(ingredientes);
         this.setPasos(pasos);
         this.setPorciones(porciones);
@@ -84,20 +84,39 @@ public class Receta {
         this.favorito = favorito;
     }
 
-    public String getRegimen() {
-        return regimen;
+    public Regimen getRegimen() {
+        switch (regimen) {
+            case "VEGANO":
+                return Regimen.VEGANO;
+            case "VEGETARIANO":
+                return Regimen.VEGETARIANO;
+            default:
+                return Regimen.OMNI;
+        }
     }
 
-    public void setRegimen(String regimen) {
-        this.regimen = regimen;
+    public void setRegimen(Regimen regimen) {
+        this.regimen = regimen.toString();
     }
 
-    public String getTipo() {
-        return tipo;
+    public Tipo getTipo() {
+        switch (tipo) {
+            case "ENTRANTE":
+                return Tipo.ENTRANTE;
+            case "APERITIVO":
+                return Tipo.APERITIVO;
+            case "PRINCIPAL":
+                return Tipo.PRINCIPAL;
+            case "POSTRE":
+                return Tipo.POSTRE;
+            default:
+                return Tipo.INDIFERENTE;
+
+        }
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public void setTipo(Tipo tipo) {
+        this.tipo = tipo.toString();
     }
 
     public List<Ingrediente> getIngredientes() {

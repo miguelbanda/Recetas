@@ -1,21 +1,16 @@
 package dds.recetas;
 
 import android.app.Application;
-import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
@@ -28,13 +23,10 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
@@ -53,7 +45,6 @@ import dds.recetas.datos.Regimen;
 import dds.recetas.datos.Tipo;
 
 import static android.app.Activity.RESULT_OK;
-import static android.support.constraint.Constraints.TAG;
 
 public class AgregarFragment extends Fragment implements AdapterView.OnItemSelectedListener{
 
@@ -333,7 +324,7 @@ public class AgregarFragment extends Fragment implements AdapterView.OnItemSelec
         String ingredienteUno = primerIngrediente.getText().toString();
         if(verificaStringNoVacia(ingredienteUno))
         {
-            ingredientePrimero.nombre = ingredienteUno;
+            ingredientePrimero.setNombre(ingredienteUno);
             listaIngredientes.add(ingredientePrimero);
         }
 
@@ -341,7 +332,7 @@ public class AgregarFragment extends Fragment implements AdapterView.OnItemSelec
             String ingredienteN = editIngredientes.get(i).getText().toString();
             Ingrediente ingredienteNuevo = new Ingrediente();
             if(verificaStringNoVacia(ingredienteN)){
-                ingredienteNuevo.nombre = ingredienteN;
+                ingredienteNuevo.setNombre(ingredienteN);
                 listaIngredientes.add(ingredienteNuevo);
             }
         }

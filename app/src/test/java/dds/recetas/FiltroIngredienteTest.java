@@ -19,12 +19,12 @@ public class FiltroIngredienteTest {
         List<Receta> recetas = new ArrayList<>();
         for(int i = 0; i < n; i++) {
             recetas.add(new Receta());
-            recetas.get(i).ingredientes = new ArrayList<>();
+            recetas.get(i).setIngredientes(new ArrayList<Ingrediente>());
         }
 
-        recetas.get(0).ingredientes.add(new Ingrediente("Albahaca"));
-        recetas.get(1).ingredientes.add(new Ingrediente("Fresa"));
-        recetas.get(2).ingredientes.add(new Ingrediente("Tomate"));
+        recetas.get(0).getIngredientes().add(new Ingrediente("Albahaca"));
+        recetas.get(1).getIngredientes().add(new Ingrediente("Fresa"));
+        recetas.get(2).getIngredientes().add(new Ingrediente("Tomate"));
 
 
         FiltroQueryFactory fab = FiltroQueryFactory.getInstance();
@@ -33,6 +33,6 @@ public class FiltroIngredienteTest {
         List<Receta> filtradas = Receta.filtrar(recetas, filtro);
 
         assertEquals(1, filtradas.size());
-        assertEquals(recetas.get(2).ingredientes.get(0), filtradas.get(0).ingredientes.get(0));
+        assertEquals(recetas.get(2).getIngredientes().get(0), filtradas.get(0).getIngredientes().get(0));
     }
 }

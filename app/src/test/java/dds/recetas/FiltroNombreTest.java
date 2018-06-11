@@ -16,13 +16,13 @@ public class FiltroNombreTest {
     public void recuperarDos() {
         List<Receta> recetas = new ArrayList<>();
         Receta primera = new Receta();
-        primera.nombre = "Hamburguesa";
+        primera.setNombre("Hamburguesa");
         Receta segunda = new Receta();
-        segunda.nombre = "Trio de hamburguesas";
+        segunda.setNombre("Trio de hamburguesas");
         Receta tercera = new Receta();
-        tercera.nombre = "Pollo con champiñones";
+        tercera.setNombre("Pollo con champiñones");
         Receta cuarta = new Receta();
-        cuarta.nombre = "Torta de cumpleaños";
+        cuarta.setNombre("Torta de cumpleaños");
 
         recetas.add(primera);
         recetas.add(segunda);
