@@ -5,8 +5,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +20,7 @@ public class BdRecetaAPI {
     public List<Receta> favoritos() {
         List<Receta> resultado = new ArrayList<>();
         for(Receta r : recetas) {
-            if(r.favorito) {
+            if(r.isFavorito()) {
                 resultado.add(r);
             }
         }
@@ -30,11 +28,11 @@ public class BdRecetaAPI {
     }
 
     public void agregarFavorito(Receta r) {
-        recetasRef.child(r.id).child("favorito").setValue(true);
+        recetasRef.child(r.getId()).child("favorito").setValue(true);
     }
 
     public void borrarFavorito(Receta r) {
-        recetasRef.child(r.id).child("favorito").setValue(false);
+        recetasRef.child(r.getId()).child("favorito").setValue(false);
     }
 
     public List<Receta> buscarReceta(String titulo, String ingrediente,
@@ -42,10 +40,10 @@ public class BdRecetaAPI {
         List<Receta> resultado = new ArrayList<>();
 
         for(Receta r : recetas) {
-            if(r.nombre.toLowerCase().contains(titulo.toLowerCase())
-                    && (tipo.toString() == r.tipo || tipo == Tipo.INDIFERENTE)
-                    && (regimen.toString() == r.regimen || regimen == Regimen.OMNI)) {
-                for(Ingrediente i : r.ingredientes) {
+            if(r.getNombre().toLowerCase().contains(titulo.toLowerCase())
+                    && (tipo.toString() == r.getTipo() || tipo == Tipo.INDIFERENTE)
+                    && (regimen.toString() == r.getRegimen() || regimen == Regimen.OMNI)) {
+                for(Ingrediente i : r.getIngredientes()) {
                     if(i.nombre.contains(ingrediente)) {
                         resultado.add(r);
                         break;
@@ -59,14 +57,14 @@ public class BdRecetaAPI {
     //Refactoring: primary key autogenerada en vez de título: varias recetas pueden
     //compartir título
     public void crearReceta(Receta r) {
-        r.id = recetasRef.push().getKey();
-        recetasRef.child(r.id).setValue(r);
+        r.setId(recetasRef.push().getKey());
+        recetasRef.child(r.getId()).setValue(r);
     }
 
     public List<Receta> buscarRecetaPorTitulo(String titulo) {
         List<Receta> resultado = new ArrayList<>();
         for(Receta r : recetas) {
-            if(r.nombre.toLowerCase().contains(titulo.toLowerCase())) {
+            if(r.getNombre().toLowerCase().contains(titulo.toLowerCase())) {
                 resultado.add(r);
             }
         }

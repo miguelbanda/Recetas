@@ -1,15 +1,12 @@
 package dds.recetas;
 
-import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -17,7 +14,6 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import dds.recetas.datos.Receta;
@@ -43,16 +39,16 @@ public class AdaptadorRecetasInicio extends RecyclerView.Adapter<AdaptadorReceta
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolderRecetas holder, final int position) {
-        Picasso.get().load(listaRecetasInicio.get(position).foto).into(holder.fotoReceta);
-        holder.nombreReceta.setText(listaRecetasInicio.get(position).nombre);
+        Picasso.get().load(listaRecetasInicio.get(position).getFoto()).into(holder.fotoReceta);
+        holder.nombreReceta.setText(listaRecetasInicio.get(position).getNombre());
 
         holder.layoutItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent nuevaActividad = new Intent(context, MostrarReceta.class);
-                String idReceta = listaRecetasInicio.get(position).id;
+                String idReceta = listaRecetasInicio.get(position).getId();
                 nuevaActividad.putExtra("id", idReceta);
-                nuevaActividad.putExtra("fav", listaRecetasInicio.get(position).favorito);
+                nuevaActividad.putExtra("fav", listaRecetasInicio.get(position).isFavorito());
 
                 Toast.makeText(context,"Click on: " + holder.nombreReceta.getText(), Toast.LENGTH_SHORT).show();
 

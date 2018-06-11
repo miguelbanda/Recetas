@@ -10,6 +10,6 @@ public class FiltroQueryId implements FiltroQuery {
 
     @Override
     public boolean filtro(Receta r) {
-        return r.id.equals(criterio);
+        return r.getId().equals(criterio);
     }
 }

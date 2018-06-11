@@ -10,6 +10,6 @@ public class FiltroQueryNombre implements FiltroQuery {
 
     @Override
     public boolean filtro(Receta r) {
-        return r.nombre.toLowerCase().contains(criterio.toLowerCase());
+        return r.getNombre().toLowerCase().contains(criterio.toLowerCase());
     }
 }

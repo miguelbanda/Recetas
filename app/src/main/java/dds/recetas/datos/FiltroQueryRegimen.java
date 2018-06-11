@@ -10,7 +10,7 @@ public class FiltroQueryRegimen implements FiltroQuery {
 
     @Override
     public boolean filtro(Receta r) {
-        return comparar(r.regimen, criterio.toString());
+        return comparar(r.getRegimen(), criterio.toString());
     }
 
     private boolean comparar(String regimen1, String regimen2) {

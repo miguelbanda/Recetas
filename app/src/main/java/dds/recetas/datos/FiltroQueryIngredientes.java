@@ -9,8 +9,8 @@ public class FiltroQueryIngredientes implements FiltroQuery {
 
     @Override
     public boolean filtro(Receta r) {
-        for(Ingrediente i : r.ingredientes) {
-            if(i.nombre.toLowerCase().contains(criterio.toLowerCase())) {
+        for(Ingrediente i : r.getIngredientes()) {
+            if(i.nombre.contains(criterio)) {
                 return true;
             }
         }

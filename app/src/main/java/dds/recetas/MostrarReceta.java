@@ -3,14 +3,12 @@ package dds.recetas;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,8 +22,6 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-import dds.recetas.datos.FiltroQuery;
-import dds.recetas.datos.FiltroQueryFactory;
 import dds.recetas.datos.Ingrediente;
 import dds.recetas.datos.Paso;
 import dds.recetas.datos.Receta;
@@ -112,13 +108,13 @@ public class MostrarReceta extends AppCompatActivity {
         tv_tipo = findViewById(R.id.textViewTipoReceta);
         tv_regimen = findViewById(R.id.textViewRegimenReceta);
 
-        nombreReceta = recetaMostrada.nombre;
-        urlImagenReceta = recetaMostrada.foto;
-        porcionesReceta = String.valueOf(recetaMostrada.porciones);
-        tipoReceta = recetaMostrada.tipo;
-        regimenReceta = recetaMostrada.regimen;
-        ingredientes = recetaMostrada.ingredientes;
-        pasos = recetaMostrada.pasos;
+        nombreReceta = recetaMostrada.getNombre();
+        urlImagenReceta = recetaMostrada.getFoto();
+        porcionesReceta = String.valueOf(recetaMostrada.getPorciones());
+        tipoReceta = recetaMostrada.getTipo();
+        regimenReceta = recetaMostrada.getRegimen();
+        ingredientes = recetaMostrada.getIngredientes();
+        pasos = recetaMostrada.getPasos();
 
         Picasso.get().load(urlImagenReceta).into(imagenReceta);
         tv_titulo.setText(nombreReceta);
@@ -182,7 +178,7 @@ public class MostrarReceta extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         esFavorito = !esFavorito;
         setItemFavorito();
-        databaseRef.child(recetaMostrada.id).child("favorito").setValue(esFavorito);
+        databaseRef.child(recetaMostrada.getId()).child("favorito").setValue(esFavorito);
         return true;
     }
 }

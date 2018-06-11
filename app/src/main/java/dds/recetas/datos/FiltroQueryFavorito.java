@@ -10,6 +10,6 @@ public class FiltroQueryFavorito implements FiltroQuery {
 
     @Override
     public boolean filtro(Receta r) {
-        return r.favorito == criterio;
+        return r.isFavorito() == criterio;
     }
 }
