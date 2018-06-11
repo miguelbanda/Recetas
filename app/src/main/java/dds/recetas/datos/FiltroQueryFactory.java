@@ -59,14 +59,14 @@ public class FiltroQueryFactory {
     }
 
     //Refactoring : valor de los booleanos en variables en vez de hacer varias invocaciones
-    //a isEmpty
+    //a noFiltrar
     public FiltroQuery build(String id, String nombre, Tipo tipo, Regimen regimen, String ingrediente) {
 
-        boolean bId = isEmpty(id);
-        boolean bNombre = isEmpty(nombre);
-        boolean bTipo = isEmpty(tipo);
-        boolean bRegimen = isEmpty(regimen);
-        boolean bIngrediente = isEmpty(ingrediente);
+        boolean bId = noFiltrar(id);
+        boolean bNombre = noFiltrar(nombre);
+        boolean bTipo = noFiltrar(tipo);
+        boolean bRegimen = noFiltrar(regimen);
+        boolean bIngrediente = noFiltrar(ingrediente);
 
         if(!bId && bNombre && bTipo && bRegimen && bIngrediente) {
             return new FiltroQueryId(id);
@@ -100,15 +100,15 @@ public class FiltroQueryFactory {
 
     //Utilidades
 
-    private boolean isEmpty(String s) {
+    private boolean noFiltrar(String s) {
         return s == null || s.length() == 0;
     }
 
-    private boolean isEmpty(Regimen r) {
+    private boolean noFiltrar(Regimen r) {
         return r == null || r == Regimen.OMNI;
     }
 
-    private boolean isEmpty(Tipo t) {
+    private boolean noFiltrar(Tipo t) {
         return t == null || t == Tipo.INDIFERENTE;
     }
 }
