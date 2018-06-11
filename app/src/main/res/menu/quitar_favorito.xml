@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/agregarFavorito"
+    <item android:id="@+id/eliminarFavorito"
         android:icon="@drawable/ic_star_black_24dp"
         android:title="@string/eliminarFavorito"
         app:showAsAction="always"

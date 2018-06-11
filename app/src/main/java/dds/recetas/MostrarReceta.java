@@ -3,13 +3,14 @@ package dds.recetas;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,12 +21,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import dds.recetas.datos.BdRecetaAPI;
 import dds.recetas.datos.FiltroQuery;
 import dds.recetas.datos.FiltroQueryFactory;
 import dds.recetas.datos.Ingrediente;
@@ -34,7 +32,8 @@ import dds.recetas.datos.Receta;
 
 public class MostrarReceta extends AppCompatActivity {
 
-    boolean favorito;
+    boolean esFavorito;
+    int ediciones = 0;
     Receta recetaMostrada;
     List<Receta> recetas;
     String idReceta, nombreReceta, porcionesReceta, tipoReceta, regimenReceta, urlImagenReceta;
@@ -45,6 +44,8 @@ public class MostrarReceta extends AppCompatActivity {
     ImageView imagenReceta;
     private DatabaseReference databaseRef;
 
+    Menu menuFavorito;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,20 +55,17 @@ public class MostrarReceta extends AppCompatActivity {
         recetas = new ArrayList<>();
         recetaMostrada = new Receta();
 
+        obtenerIdReceta();
+        //Refactoring: solo cargar receta que se necesita
         databaseRef = FirebaseDatabase.getInstance().getReference("recetas");
-        databaseRef.addValueEventListener(new ValueEventListener() {
+        databaseRef.child(idReceta).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    Receta receta = postSnapshot.getValue(Receta.class);
-                    recetas.add(receta);
+                recetaMostrada = dataSnapshot.getValue(Receta.class);
+
+                if(ediciones == 0){
+                    cargarDatosReceta();
                 }
-                FiltroQueryFactory fab = FiltroQueryFactory.getInstance();
-                FiltroQuery filtro = fab.build(idReceta, null, null, null, null);
-                recetas = Receta.filtrar(recetas, filtro);
-                recetaMostrada = recetas.get(0);
-                obtenerIdReceta();
-                cargarDatosReceta();
             }
 
             @Override
@@ -78,6 +76,27 @@ public class MostrarReceta extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarMostrar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
+    }
+
+    private void setItemFavorito() {
+
+        if(menuFavorito != null) {
+            menuFavorito.clear();
+        }
+
+        if (esFavorito) {
+            getMenuInflater().inflate(R.menu.quitar_favorito, menuFavorito);
+        }
+        else {
+            getMenuInflater().inflate(R.menu.agregar_favorito, menuFavorito);
+        }
     }
 
     private void obtenerIdReceta() {
@@ -98,7 +117,6 @@ public class MostrarReceta extends AppCompatActivity {
         porcionesReceta = String.valueOf(recetaMostrada.porciones);
         tipoReceta = recetaMostrada.tipo;
         regimenReceta = recetaMostrada.regimen;
-        favorito = recetaMostrada.favorito;
         ingredientes = recetaMostrada.ingredientes;
         pasos = recetaMostrada.pasos;
 
@@ -110,6 +128,7 @@ public class MostrarReceta extends AppCompatActivity {
 
         crearListaPasos();
         crearListaIngredientes();
+        ediciones++;
     }
 
     private void crearListaPasos() {
@@ -143,15 +162,27 @@ public class MostrarReceta extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
 
-        if(!favorito){
-            inflater.inflate(R.menu.agregar_favorito, menu);
-        }
-        else {
-            inflater.inflate(R.menu.quitar_favorito, menu);
+        if(getIntent().hasExtra("fav")) {
+            esFavorito = getIntent().getExtras().getBoolean("fav");
         }
 
+        if (esFavorito) {
+            getMenuInflater().inflate(R.menu.quitar_favorito, menu);
+        } else {
+            getMenuInflater().inflate(R.menu.agregar_favorito, menu);
+        }
+
+        menuFavorito = menu;
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        esFavorito = !esFavorito;
+        setItemFavorito();
+        databaseRef.child(recetaMostrada.id).child("favorito").setValue(esFavorito);
         return true;
     }
 }

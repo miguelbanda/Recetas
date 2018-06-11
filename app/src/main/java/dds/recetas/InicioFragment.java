@@ -54,6 +54,7 @@ public class InicioFragment extends Fragment {
         databaseRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                listaRecetasInicio.clear();
                 for(DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Receta receta = postSnapshot.getValue(Receta.class);
                     listaRecetasInicio.add(receta);

@@ -42,7 +42,7 @@ public class AdaptadorRecetasInicio extends RecyclerView.Adapter<AdaptadorReceta
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolderRecetas holder, final int position) {
+    public void onBindViewHolder(@NonNull final ViewHolderRecetas holder, final int position) {
         Picasso.get().load(listaRecetasInicio.get(position).foto).into(holder.fotoReceta);
         holder.nombreReceta.setText(listaRecetasInicio.get(position).nombre);
 
@@ -52,8 +52,9 @@ public class AdaptadorRecetasInicio extends RecyclerView.Adapter<AdaptadorReceta
                 Intent nuevaActividad = new Intent(context, MostrarReceta.class);
                 String idReceta = listaRecetasInicio.get(position).id;
                 nuevaActividad.putExtra("id", idReceta);
+                nuevaActividad.putExtra("fav", listaRecetasInicio.get(position).favorito);
 
-                Toast.makeText(context,"Click on: " + idReceta, Toast.LENGTH_SHORT).show();
+                Toast.makeText(context,"Click on: " + holder.nombreReceta.getText(), Toast.LENGTH_SHORT).show();
 
                 context.startActivity(nuevaActividad);
             }

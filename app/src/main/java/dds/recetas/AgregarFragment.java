@@ -1,6 +1,8 @@
 package dds.recetas;
 
 import android.app.Application;
+import android.app.FragmentTransaction;
+import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
@@ -60,6 +62,7 @@ public class AgregarFragment extends Fragment implements AdapterView.OnItemSelec
     ImageView imageViewReceta;
     String tituloReceta,
             stringImagen = "https://firebasestorage.googleapis.com/v0/b/recetas-53da2.appspot.com/o/recetas%2Fnotfound.png?alt=media&token=1b9b07ee-d785-4138-8ecf-8665c03acc6b";
+    String imageNotFound = "https://firebasestorage.googleapis.com/v0/b/recetas-53da2.appspot.com/o/recetas%2Fnotfound.png?alt=media&token=1b9b07ee-d785-4138-8ecf-8665c03acc6b";
     //Refactoring: No poner cadena vacia porque da error, poner por default imagen de error cargada en la base de datos
     List<EditText> editIngredientes = new ArrayList<EditText>();
     List<EditText> editPasos = new ArrayList<EditText>();
@@ -99,6 +102,8 @@ public class AgregarFragment extends Fragment implements AdapterView.OnItemSelec
         spinnerPorcionesAgregar = fragmentAgregar.findViewById(R.id.spinnerPorcionesAgregar);
         spinnerTipoAgregar = fragmentAgregar.findViewById(R.id.spinnerTipoAgregar);
         spinnerRegimenAgregar = fragmentAgregar.findViewById(R.id.spinnerRegimenAgregar);
+
+        vaciarCampos();
 
         spinnerRegimenAgregar.setOnItemSelectedListener(this);
         spinnerTipoAgregar.setOnItemSelectedListener(this);
@@ -165,6 +170,20 @@ public class AgregarFragment extends Fragment implements AdapterView.OnItemSelec
         return fragmentAgregar;
     }
 
+    private void vaciarCampos() {
+        nombreReceta.setText("");
+        primerIngrediente.setText("");
+        primerPaso.setText("");
+        urlImagen = null;
+        stringImagen = "";
+        listaIngredientes.clear();
+        listaPasos.clear();
+        tipo = Tipo.INDIFERENTE;
+        regimen = Regimen.OMNI;
+        imageViewReceta.setImageResource(R.drawable.error);
+        setAdaptadoresSpinners();
+    }
+
     private void cargarImagen() {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         intent.setType("image/");
@@ -182,24 +201,38 @@ public class AgregarFragment extends Fragment implements AdapterView.OnItemSelec
 
     private void cargarReceta() {
         if(urlImagen != null){
+
+            final ProgressDialog progressDialog = new ProgressDialog(getContext());
+            progressDialog.setTitle("Cargando Receta...");
+            progressDialog.show();
+
             StorageReference fileReference = recetasStorageRef.child(System.currentTimeMillis() + "." + getFileExtension(urlImagen));
             fileReference.putFile(urlImagen)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
+                            progressDialog.dismiss();
+
                             stringImagen = taskSnapshot.getDownloadUrl().toString();
-                            BdRecetaAPI apiBaseDeDatos = BdRecetaAPI.getInstance();
-                            Receta nuevaReceta = new Receta(tituloReceta, stringImagen, regimen, tipo, listaIngredientes, listaPasos, porciones);
-                            apiBaseDeDatos.crearReceta(nuevaReceta);
-                            Toast.makeText(getContext(),"Receta agregada", Toast.LENGTH_SHORT).show();
-                            Toast.makeText(getContext(), stringImagen, Toast.LENGTH_SHORT).show();
+                            if (!stringImagen.equals(imageNotFound)) {
+                                BdRecetaAPI apiBaseDeDatos = BdRecetaAPI.getInstance();
+
+                                Receta nuevaReceta = new Receta(tituloReceta, stringImagen, regimen, tipo, listaIngredientes, listaPasos, porciones);
+                                apiBaseDeDatos.crearReceta(nuevaReceta);
+                                vaciarCampos();
+                                Toast.makeText(getContext(), "Receta agregada", Toast.LENGTH_SHORT).show();
+                            }
+                            else {
+                                Toast.makeText(getContext(), "Seleccionar imagen", Toast.LENGTH_SHORT).show();
+                            }
 
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
+                            progressDialog.dismiss();
                             Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     })
@@ -207,11 +240,14 @@ public class AgregarFragment extends Fragment implements AdapterView.OnItemSelec
                         @Override
                         public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
 
+                            double progress = (100.0*taskSnapshot.getBytesTransferred()/taskSnapshot
+                                    .getTotalByteCount());
+                            progressDialog.setMessage("Uploaded "+(int)progress+"%");
                         }
                     });
 
         } else {
-            Toast.makeText(getContext(), "No se puede agregar imagen", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Seleccionar  Imagen", Toast.LENGTH_SHORT).show();
         }
     }
 

@@ -52,7 +52,6 @@ public class BuscarReceta extends AppCompatActivity implements AdapterView.OnIte
         editIngrediente = findViewById(R.id.editTextIngrediente);
 
 
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarSearch);
         setSupportActionBar(toolbar);
 
