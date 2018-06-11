@@ -10,6 +10,22 @@ public class FiltroQueryRegimen implements FiltroQuery {
 
     @Override
     public boolean filtro(Receta r) {
-        return r.regimen.equals(criterio.toString());
+        return comparar(r.regimen, criterio.toString());
+    }
+
+    private boolean comparar(String regimen1, String regimen2) {
+        if(regimen1.equals(regimen2))
+            return true;
+        else if(regimen2.equals(Regimen.OMNI.toString()))
+            return true;
+        else if (regimen1.equals(Regimen.OMNI.toString()))
+            return false;
+        else {
+            if(regimen1.equals(Regimen.VEGANO.toString())
+                    && regimen2.equals(Regimen.VEGETARIANO.toString()))
+                return true;
+            else
+                return false;
+        }
     }
 }
