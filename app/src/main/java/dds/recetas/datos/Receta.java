@@ -2,7 +2,10 @@ package dds.recetas.datos;
 
 import com.google.firebase.database.IgnoreExtraProperties;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import dds.recetas.FiltroQuery;
 
 @IgnoreExtraProperties
 public class Receta {
@@ -27,5 +30,15 @@ public class Receta {
 
     public Receta() {
         //Default constructor necesario para Firebase
+    }
+
+    public static List<Receta> filtrar(List<Receta> recetas, FiltroQuery query) {
+        List<Receta> resultado = new ArrayList<>();
+        for(Receta r : recetas) {
+            if(query.filtro(r)) {
+                resultado.add(r);
+            }
+        }
+        return resultado;
     }
 }
