@@ -8,10 +8,8 @@ public class Ingrediente {
     public double cantidad;
     public String unidad;
 
-    public Ingrediente(String nombre, double cantidad, String unidad) {
+    public Ingrediente(String nombre) {
         this.nombre = nombre;
-        this.cantidad = cantidad;
-        this.unidad = unidad;
     }
 
     public Ingrediente() {
