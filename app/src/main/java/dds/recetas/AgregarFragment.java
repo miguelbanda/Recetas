@@ -27,7 +27,6 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -37,7 +36,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-import dds.recetas.datos.BdRecetaAPI;
+import dds.recetas.datos.AgregarReceta;
 import dds.recetas.datos.Ingrediente;
 import dds.recetas.datos.Paso;
 import dds.recetas.datos.Receta;
@@ -219,7 +218,7 @@ public class AgregarFragment extends Fragment implements AdapterView.OnItemSelec
 
                             stringImagen = taskSnapshot.getDownloadUrl().toString();
                             if (!stringImagen.equals(imageNotFound)) {
-                                BdRecetaAPI apiBaseDeDatos = BdRecetaAPI.getInstance();
+                                AgregarReceta apiBaseDeDatos = AgregarReceta.getInstance();
 
                                 Receta nuevaReceta = new Receta(tituloReceta, stringImagen, regimen, tipo, listaIngredientes, listaPasos, porciones);
                                 apiBaseDeDatos.crearReceta(nuevaReceta);

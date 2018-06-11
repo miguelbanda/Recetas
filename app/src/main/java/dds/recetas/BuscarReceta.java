@@ -1,6 +1,5 @@
 package dds.recetas;
 
-import android.app.Fragment;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,11 +11,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import dds.recetas.datos.Receta;
-import dds.recetas.datos.BdRecetaAPI;
 import dds.recetas.datos.Regimen;
 import dds.recetas.datos.Tipo;
 
