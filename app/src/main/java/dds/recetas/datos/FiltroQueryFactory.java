@@ -27,37 +27,41 @@ public class FiltroQueryFactory {
         return new FiltroQueryFavorito(favorito);
     }
 
+    //Refactoring : valor de los booleanos en variables en vez de hacer varias invocaciones
+    //a isEmpty
     public FiltroQuery build(String id, String nombre, Tipo tipo, Regimen regimen, String ingrediente) {
 
-        if(!isEmpty(id) && isEmpty(nombre) && isEmpty(tipo)
-                && isEmpty(regimen) && isEmpty(ingrediente)) {
+        boolean bId = isEmpty(id);
+        boolean bNombre = isEmpty(nombre);
+        boolean bTipo = isEmpty(tipo);
+        boolean bRegimen = isEmpty(regimen);
+        boolean bIngrediente = isEmpty(ingrediente);
+
+        if(!bId && bNombre && bTipo && bRegimen && bIngrediente) {
             return new FiltroQueryId(id);
-        } else if(!isEmpty(nombre) && isEmpty(id) && isEmpty(tipo)
-                && isEmpty(regimen) && isEmpty(ingrediente)) {
+        } else if(bId && !bNombre && bTipo && bRegimen && bIngrediente) {
             return new FiltroQueryNombre(nombre);
-        } else if(!isEmpty(tipo) && isEmpty(id) && isEmpty(nombre)
-                && isEmpty(regimen) && isEmpty(ingrediente)) {
+        } else if(bId && bNombre && !bTipo && bRegimen && bIngrediente) {
             return new FiltroQueryTipo(tipo);
-        } else if(!isEmpty(regimen) && isEmpty(id) && isEmpty(nombre)
-                && isEmpty(tipo) && isEmpty(ingrediente)) {
+        } else if(bId && bNombre && bTipo && !bRegimen && bIngrediente) {
             return new FiltroQueryRegimen(regimen);
-        } else if(!isEmpty(ingrediente) && isEmpty(id) && isEmpty(nombre)
-                && isEmpty(tipo) && isEmpty(regimen)) {
+        } else if(bId && bNombre && bTipo && bRegimen && !bIngrediente) {
             return new FiltroQueryIngredientes(ingrediente);
-        } else if(isEmpty(nombre) && !isEmpty(id) && isEmpty(tipo)
-                && isEmpty(regimen) && isEmpty(ingrediente)) {
+        } else if(bId && bNombre && bTipo && bRegimen && bIngrediente) {
             return new FiltroQueryNull();
         } else {//Búsqueda avanzada
             List<FiltroQuery> filtros = new ArrayList<>();
 
-            if(!isEmpty(nombre))
+            if(!bNombre)
                 filtros.add(new FiltroQueryNombre(nombre));
-            if(!isEmpty(tipo))
+            if(!bRegimen)
                 filtros.add(new FiltroQueryTipo(tipo));
-            if(!isEmpty(regimen))
+            if(!bTipo)
                 filtros.add(new FiltroQueryRegimen(regimen));
-            if(!isEmpty(ingrediente))
+            if(!bIngrediente)
                 filtros.add(new FiltroQueryIngredientes(ingrediente));
+            if(!bId)
+                filtros.add(new FiltroQueryId(id));
 
             return new FiltroQueryAvanzada(filtros);
         }
